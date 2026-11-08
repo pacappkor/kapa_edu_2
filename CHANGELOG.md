@@ -11,6 +11,8 @@
 ## [Unreleased]
 
 ### 추가
+- 단일 CI 작업에서 변경 경로별 검사를 선택하고 실행 요약에 표시하도록 했다.
+- PR·main 푸시·수동 실행용 경량 GitHub Actions CI(오프라인 검증·현황표 최신성·단위 테스트·빌드 도구 구문·공백 검사)를 추가했다.
 - README 에 KTUG 기반 Windows 한글 LaTeX 환경 설정·경로 규칙·번들 글꼴 확인·문제 해결 안내를 추가했다.
 - `tools/build.py` 에 UnBatang·UnDotum·Baekmuk Batang(한자 대체 글꼴)·kotex 사전 검사와 경로 경고, `--skip-preflight` 옵션을 추가했다. `python tools/test_build.py` 로 사전 검사 동작을 검증한다.
 
@@ -24,6 +26,8 @@
 -->
 
 ### 정정
+- CI 공백 검사를 푸시 전체 범위로 확대하고 기준 누락·단일 커밋 이력을 처리했다. 이름 변경은 삭제·추가 경로 모두 분류하며 회귀 테스트를 추가했다.
+- 2차 시험 CI 에서 사용하지 않는 정답 검사 그룹과 README 안내를 제거했다.
 - 문서(Markdown)의 범위 표기 `~` 를 "–" 로 바꿨다. GitHub 는 한 줄에 물결표가 두 개 있으면 그 사이를 취소선으로 표시하기 때문이다(예: `제26~29, 35~37회`).
 - `tools/validate.py` 가 Markdown 본문(코드 스팬·코드 블록 제외)의 `~` 를 오류로 잡는다.
 

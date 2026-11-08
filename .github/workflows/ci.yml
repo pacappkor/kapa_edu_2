@@ -1,0 +1,70 @@
+# SPDX-License-Identifier: GPL-3.0-only
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Select checks from changed paths
+        id: changes
+        env:
+          CI_EVENT: ${{ github.event_name }}
+          CI_BASE: ${{ github.event.pull_request.base.sha }}
+          CI_BEFORE: ${{ github.event.before }}
+        run: python tools/ci_changes.py
+      # No exam-source downloads or TeX installation; validators use the checkout only.
+      - name: Validate structure and Markdown prose
+        if: steps.changes.outputs.validate == 'true'
+        run: python tools/validate.py --write-status
+      - name: Check generated status is current
+        if: steps.changes.outputs.validate == 'true'
+        run: git diff --exit-code -- docs/STATUS.md docs/status.json
+      - name: Discover all unit tests
+        if: steps.changes.outputs.tests == 'true'
+        # Empty discovery is valid until test files arrive on main (also on Python 3.14+).
+        run: >-
+          python -c "import unittest; suite = unittest.defaultTestLoader.discover('tools', pattern='test_*.py'); result = unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+      - name: Check build script Python syntax (no TeX)
+        if: steps.changes.outputs.build == 'true'
+        run: python -m py_compile tools/build.py
+      - name: Check PR whitespace against base
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: git diff --check "$BASE_SHA" HEAD
+      - name: Check whitespace for non-PR events
+        if: github.event_name != 'pull_request'
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          BASE_SHA="$BEFORE_SHA"
+          if [ "$EVENT_NAME" != push ] || [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then
+            BASE_SHA=HEAD^
+          fi
+          if [ "$BASE_SHA" = 'HEAD^' ] && ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            echo "Skipping whitespace check: no parent commit exists."
+          else
+            git diff --check "$BASE_SHA" HEAD
+          fi

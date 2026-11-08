@@ -104,6 +104,25 @@ python tools/validate.py --write-status        # 구조 검증 + STATUS.md 갱�
 ```
 검토는 `build/` PDF 와 원본 시험지를 나란히 놓고 문제 번호·본문·물음·배점·표(모든 칸)·그림을 대조합니다.
 
+## CI
+
+GitHub Actions 는 PR, `main` 푸시, 수동 실행에서 Python 3.12 로 다음을 검사합니다.
+
+- `python tools/validate.py --write-status`: 구조·배점 경고와 Markdown 본문 범위 표기 검사
+- 생성한 `docs/STATUS.md` · `docs/status.json` 이 커밋된 내용과 같은지 확인
+- `tools/test_*.py` 단위 테스트 자동 탐색(`tools/test_build.py` 포함, 파일이 없으면 통과)
+- `python -m py_compile tools/build.py`: 빌드 도구의 Python 구문 검사
+- PR 기준 커밋과의 `git diff --check`: 변경 줄 공백 오류 검사
+
+한 작업 안에서 변경 경로에 따라 검사를 선택하고 실행 요약에 표시합니다. Markdown 만 바뀌면
+본문 검사를 포함한 구조 검증·현황표 확인만 실행하고, 문항 변경은 구조 검증·현황표 확인을,
+`latex/` 변경은 빌드 도구 구문 검사를 실행합니다. `tools/` · 워크플로·분류 불명 경로 변경,
+`main` 푸시·수동 실행·변경 목록 조회 실패는 모든 검사를 실행합니다. 공백 검사는 PR 기준 커밋 또는 푸시 직전 커밋부터 HEAD 까지 확인합니다.
+수동 실행·푸시 기준 누락 시 HEAD^ 를 사용하며, 부모 커밋이 없는 최초 이력은 건너뜁니다.
+
+외부 시험 자료 다운로드·비밀값·TeX 설치는 사용하지 않습니다. 빌드 도구에는 TeX 없는 생성 모드가 없어
+PDF 컴파일·실제 글꼴 검사·원본 대조는 로컬 검토 절차로 남깁니다.
+
 ## 버전과 변경 이력
 
 - 변경 내용: [CHANGELOG.md](CHANGELOG.md)
