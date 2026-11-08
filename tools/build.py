@@ -64,6 +64,10 @@ def compile_tex(tex, cwd):
     missing = sorted(set(re.findall(r'Missing character: There is no (.) ', logtxt)))
     return r.returncode == 0, errs[:10], missing
 
+# kapa-exam.sty 가 쓰는 글꼴·패키지: UnBatang·UnDotum(unfonts-core), UnBatang 에 없는 한자의 대체 글꼴
+# Baekmuk Batang(baekmuk 패키지의 batang.ttf), kotex
+PREFLIGHT_FILES = ('UnBatang.ttf', 'UnDotum.ttf', 'batang.ttf', 'kotex.sty')
+
 def preflight():
     """컴파일 전에 TeX Live 의 한글 패키지·글꼴과 저장소 경로를 확인한다."""
     if not str(ROOT).isascii() or ' ' in str(ROOT):
@@ -78,7 +82,7 @@ def preflight():
         print(f'사전 검사 실패: PATH 에 kpsewhich 가 없습니다. TeX Live 설치·PATH 와 {guide}', file=sys.stderr)
         return False
     missing = []
-    for name in ('UnBatang.ttf', 'UnDotum.ttf', 'kotex.sty'):
+    for name in PREFLIGHT_FILES:
         try:
             result = subprocess.run([kpsewhich, name], capture_output=True, text=True,
                                     encoding='utf-8', errors='replace', timeout=10)
@@ -89,9 +93,9 @@ def preflight():
             missing.append(name)
     if missing:
         print(f'사전 검사 실패: TeX Live 에서 {", ".join(missing)} 을 찾지 못했습니다. '
-              f'kotex·unfonts-core 설치를 확인하세요(글꼴: tlmgr install unfonts-core). {guide}', file=sys.stderr)
+              f'kotex·unfonts-core·baekmuk 설치를 확인하세요(글꼴: tlmgr install unfonts-core baekmuk). {guide}', file=sys.stderr)
         return False
-    print('사전 검사 통과: UnBatang.ttf, UnDotum.ttf, kotex.sty')
+    print('사전 검사 통과: ' + ', '.join(PREFLIGHT_FILES))
     return True
 
 

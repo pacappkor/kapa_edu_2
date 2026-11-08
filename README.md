@@ -77,6 +77,7 @@ subjects.json                 폴더명 ↔ 과목명 대응표
 
 이 저장소는 `kotex` + `fontspec` 과 **UnBatang·UnDotum** 을 사용합니다. 두 글꼴은 TeX Live 의
 `unfonts-core` 패키지에 포함되므로 Windows 에 글꼴을 따로 설치할 필요가 없습니다.
+UnBatang 에 없는 한자는 TeX Live `baekmuk` 패키지의 **Baekmuk Batang**(`batang.ttf`)으로 대체합니다.
 시스템 글꼴을 쓰려면 fontconfig 에 Windows 글꼴 폴더를 알려 주는 `genlocalconf` 설정이 필요하지만,
 이 저장소의 번들 글꼴에는 필요하지 않습니다. KTUG 예제의 oblivoir·Noto 대신 기존 클래스·글꼴을 유지해 조판 결과를 보존합니다.
 
@@ -84,12 +85,13 @@ subjects.json                 폴더명 ↔ 과목명 대응표
 
 ```bash
 kpsewhich UnBatang.ttf
+kpsewhich batang.ttf
 xelatex --version
 ```
 
-- 글꼴을 찾지 못하면 TLShell/tlmgr 로 `unfonts-core` 를 설치하세요: `tlmgr install unfonts-core`.
+- 글꼴을 찾지 못하면 TLShell/tlmgr 로 `unfonts-core` 를 설치하세요: `tlmgr install unfonts-core baekmuk`.
 - 글꼴 캐시 문제는 `fc-cache -fv` 로 갱신하세요(TeX Live 의 bin 경로가 PATH 에 있어야 합니다).
-- `tools/build.py` 는 컴파일 전에 `kpsewhich` 로 UnBatang·UnDotum·kotex 를 확인하고,
+- `tools/build.py` 는 컴파일 전에 `kpsewhich` 로 UnBatang·UnDotum·Baekmuk Batang·kotex 를 확인하고,
   저장소 절대 경로의 비 ASCII 문자·공백은 경고합니다. 검사를 생략하려면 `--skip-preflight` 를 사용합니다
   (XeLaTeX 의 PATH 확인은 유지). 사전 검사 테스트: `python tools/test_build.py`.
 

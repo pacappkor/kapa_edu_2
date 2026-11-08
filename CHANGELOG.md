@@ -12,7 +12,7 @@
 
 ### 추가
 - README 에 KTUG 기반 Windows 한글 LaTeX 환경 설정·경로 규칙·번들 글꼴 확인·문제 해결 안내를 추가했다.
-- `tools/build.py` 에 UnBatang·UnDotum·kotex 사전 검사와 경로 경고, `--skip-preflight` 옵션을 추가했다. `python tools/test_build.py` 로 사전 검사 동작을 검증한다.
+- `tools/build.py` 에 UnBatang·UnDotum·Baekmuk Batang(한자 대체 글꼴)·kotex 사전 검사와 경로 경고, `--skip-preflight` 옵션을 추가했다. `python tools/test_build.py` 로 사전 검사 동작을 검증한다.
 
 <!--
 ### 새 회차             ← 새 시험 문제 추가 (회차별 표: docs/RELEASING.md 템플릿)

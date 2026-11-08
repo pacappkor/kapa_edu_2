@@ -28,11 +28,12 @@ class PreflightTests(unittest.TestCase):
     def test_all_resources_found(self):
         self.assertTrue(build.preflight())
         self.assertEqual([c.args[0] for c in self.run.call_args_list], [
-            ['kpsewhich', 'UnBatang.ttf'], ['kpsewhich', 'UnDotum.ttf'], ['kpsewhich', 'kotex.sty']])
+            ['kpsewhich', 'UnBatang.ttf'], ['kpsewhich', 'UnDotum.ttf'], ['kpsewhich', 'batang.ttf'],
+            ['kpsewhich', 'kotex.sty']])
         self.assertEqual(self.err.getvalue(), '')
 
     def test_each_missing_resource_and_empty_output(self):
-        for name in ('UnBatang.ttf', 'UnDotum.ttf', 'kotex.sty'):
+        for name in build.PREFLIGHT_FILES:
             for code in (0, 1):
                 with self.subTest(name=name, returncode=code):
                     self.err.seek(0)
