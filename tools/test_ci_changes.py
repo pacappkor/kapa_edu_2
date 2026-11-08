@@ -57,3 +57,19 @@ class ChangeSelectionTests(unittest.TestCase):
             self.assertEqual(flags, dict.fromkeys(ci_changes.GROUPS, 'true'))
             self.assertEqual(flags['tests'], 'true')
             self.assertEqual(flags['build'], 'true')
+
+    def test_missing_base_selects_all(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(['git', 'init', '-q', str(root)], check=True)
+            for event in ('push', 'pull_request'):
+                with self.subTest(event=event):
+                    output = root / f'{event}-output'
+                    with patch.object(ci_changes, 'ROOT', root), patch.dict(os.environ, {
+                        'CI_EVENT': event, 'CI_BASE': 'f' * 40, 'CI_BEFORE': 'f' * 40,
+                        'GITHUB_OUTPUT': str(output),
+                        'GITHUB_STEP_SUMMARY': str(root / 'summary'),
+                    }):
+                        ci_changes.main()
+                    flags = dict(line.split('=') for line in output.read_text().splitlines())
+                    self.assertEqual(flags, dict.fromkeys(ci_changes.GROUPS, 'true'))

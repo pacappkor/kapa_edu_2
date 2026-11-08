@@ -39,7 +39,12 @@ jobs:
         run: python tools/validate.py --write-status
       - name: Check generated status is current
         if: steps.changes.outputs.validate == 'true'
-        run: git diff --exit-code -- docs/STATUS.md docs/status.json
+        run: |
+          STATUS=$(git status --porcelain --untracked-files=all -- docs/STATUS.md docs/status.json)
+          if [ -n "$STATUS" ]; then
+            echo "$STATUS"
+            exit 1
+          fi
       - name: Discover all unit tests
         if: steps.changes.outputs.tests == 'true'
         # Empty discovery is valid until test files arrive on main (also on Python 3.14+).
@@ -60,10 +65,10 @@ jobs:
           BEFORE_SHA: ${{ github.event.before }}
         run: |
           BASE_SHA="$BEFORE_SHA"
-          if [ "$EVENT_NAME" != push ] || [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then
+          if [ "$EVENT_NAME" != push ] || [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]] || ! git rev-parse --verify --quiet "$BASE_SHA^{commit}" >/dev/null; then
             BASE_SHA=HEAD^
           fi
-          if [ "$BASE_SHA" = 'HEAD^' ] && ! git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+          if [ "$BASE_SHA" = 'HEAD^' ] && ! git rev-parse --verify --quiet "HEAD^{commit}^" >/dev/null; then
             echo "Skipping whitespace check: no parent commit exists."
           else
             git diff --check "$BASE_SHA" HEAD

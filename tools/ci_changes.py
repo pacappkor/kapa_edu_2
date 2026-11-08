@@ -42,6 +42,9 @@ def main():
         if start and set(start) != {'0'}:
             separator = '...' if event == 'pull_request' else '..'
             try:
+                subprocess.run(
+                    ['git', 'rev-parse', '--verify', '--quiet', f'{start}^{{commit}}'],
+                    cwd=ROOT, check=True, capture_output=True)
                 result = subprocess.run(
                     ['git', 'diff', '--no-renames', '--name-only', '-z', f'{start}{separator}HEAD'],
                     cwd=ROOT, check=True, capture_output=True)
