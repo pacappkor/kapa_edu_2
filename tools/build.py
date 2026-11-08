@@ -64,9 +64,101 @@ def compile_tex(tex, cwd):
     missing = sorted(set(re.findall(r'Missing character: There is no (.) ', logtxt)))
     return r.returncode == 0, errs[:10], missing
 
-# kapa-exam.sty 가 쓰는 글꼴·패키지: UnBatang·UnDotum(unfonts-core), UnBatang 에 없는 한자의 대체 글꼴
-# Baekmuk Batang(baekmuk 패키지의 batang.ttf), kotex
-PREFLIGHT_FILES = ('UnBatang.ttf', 'UnDotum.ttf', 'batang.ttf', 'kotex.sty')
+# 글꼴과 kotex 는 고정하고 직접 패키지 의존성은 스타일에서 읽는다.
+PREFLIGHT_FILES = ('UnBatang.ttf', 'UnDotum.ttf', 'batang.ttf', 'lmroman10-regular.otf', 'kotex.sty')
+
+
+# TeX Live 2026 의 kpsewhich 경로로 확인한 파일별 제공 패키지.
+TEXLIVE_PACKAGES = {
+    'UnBatang.ttf': 'unfonts-core', 'UnDotum.ttf': 'unfonts-core',
+    'batang.ttf': 'baekmuk', 'lmroman10-regular.otf': 'lm', 'kotex.sty': 'kotex-utf',
+    'iftex.sty': 'iftex', 'fontspec.sty': 'fontspec',
+    'newunicodechar.sty': 'newunicodechar', 'amsmath.sty': 'amsmath',
+    'amssymb.sty': 'amsfonts', 'graphicx.sty': 'graphics', 'import.sty': 'import',
+    'array.sty': 'tools', 'tabularx.sty': 'tools', 'multirow.sty': 'multirow',
+    'makecell.sty': 'makecell', 'longtable.sty': 'tools', 'booktabs.sty': 'booktabs',
+    'enumitem.sty': 'enumitem', 'tikz.sty': 'pgf', 'pgfplots.sty': 'pgfplots',
+    'xcolor.sty': 'xcolor', 'tcolorbox.sty': 'tcolorbox', 'ulem.sty': 'ulem',
+    'needspace.sty': 'needspace',
+}
+
+
+def _tex_tokens(style):
+    """스타일의 기본 catcode 기준: 제어 단어·제어 기호를 먼저 소비하고 주석을 버린다."""
+    i = 0
+    while i < len(style):
+        start = i
+        char = style[i]
+        i += 1
+        if char == '\\':
+            if i < len(style) and (style[i].isascii() and style[i].isalpha() or style[i] == '@'):
+                while i < len(style) and (style[i].isascii() and style[i].isalpha() or style[i] == '@'):
+                    i += 1
+            elif i < len(style):
+                i += 1
+        elif char == '%':
+            while i < len(style) and style[i] != '\n':
+                i += 1
+            # 주석 끝의 줄바꿈도 TeX 에서는 토큰이 아니다.
+            i += i < len(style)
+            continue
+        yield style[start:i]
+
+
+def _group_end(tokens, start, closing):
+    """이스케이프된 중괄호는 제어 기호이므로 깊이에 영향을 주지 않는다."""
+    depth = 0
+    for i in range(start + 1, len(tokens)):
+        token = tokens[i]
+        if token == closing and depth == 0:
+            return i
+        depth += {'{': 1, '}': -1}.get(token, 0)
+    return None
+
+
+def _package_groups(style):
+    """매크로 확장 없이 실제 패키지 명령의 옵션과 중괄호 인자를 토큰 단위로 읽는다."""
+    tokens = list(_tex_tokens(style))
+    groups = []
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        i += 1
+        if token not in ('\\RequirePackage', '\\RequirePackageWithOptions', '\\usepackage', '\\string', '\\noexpand', '\\detokenize'):
+            continue
+        while i < len(tokens) and tokens[i].isspace():
+            i += 1
+        if token in ('\\string', '\\noexpand', '\\detokenize'):
+            # 표시용 명령은 다음 토큰을 실행하지 않는다. detokenize 의 그룹도 건너뛴다.
+            if token == '\\detokenize' and i < len(tokens) and tokens[i] == '{':
+                end = _group_end(tokens, i, '}')
+                i = len(tokens) if end is None else end + 1
+            else:
+                i += 1
+            continue
+        if i < len(tokens) and tokens[i] == '[':
+            end = _group_end(tokens, i, ']')
+            if end is None:
+                break
+            i = end + 1
+            while i < len(tokens) and tokens[i].isspace():
+                i += 1
+        if i < len(tokens) and tokens[i] == '{':
+            end = _group_end(tokens, i, '}')
+            if end is None:
+                break
+            groups.append(''.join(tokens[i + 1:end]))
+            i = end + 1
+    return groups
+
+
+def preflight_files():
+    """스타일의 RequirePackage/RequirePackageWithOptions/usepackage 옵션·쉼표 목록을 포함한 검사 대상."""
+    style = (ROOT / 'latex' / 'kapa-exam.sty').read_text(encoding='utf-8')
+    groups = _package_groups(style)
+    packages = (name.strip() + '.sty' for group in groups for name in group.split(',') if name.strip())
+    return tuple(dict.fromkeys((*PREFLIGHT_FILES, *packages)))
+
 
 def preflight():
     """컴파일 전에 TeX Live 의 한글 패키지·글꼴과 저장소 경로를 확인한다."""
@@ -81,21 +173,38 @@ def preflight():
     if kpsewhich is None:
         print(f'사전 검사 실패: PATH 에 kpsewhich 가 없습니다. TeX Live 설치·PATH 와 {guide}', file=sys.stderr)
         return False
-    missing = []
-    for name in PREFLIGHT_FILES:
-        try:
-            result = subprocess.run([kpsewhich, name], capture_output=True, text=True,
-                                    encoding='utf-8', errors='replace', timeout=10)
-        except (OSError, subprocess.TimeoutExpired) as exc:
-            print(f'사전 검사 실패: kpsewhich {name} 실행 오류: {exc}. {guide}', file=sys.stderr)
-            return False
-        if result.returncode != 0 or not result.stdout.strip():
-            missing.append(name)
-    if missing:
-        print(f'사전 검사 실패: TeX Live 에서 {", ".join(missing)} 을 찾지 못했습니다. '
-              f'kotex·unfonts-core·baekmuk 설치를 확인하세요(글꼴: tlmgr install unfonts-core baekmuk). {guide}', file=sys.stderr)
+    try:
+        targets = preflight_files()
+        def probe(names):
+            return subprocess.run([kpsewhich, *names], capture_output=True, text=True,
+                                  encoding='utf-8', errors='replace', timeout=10)
+
+        result = probe(targets)
+        # kpsewhich 는 누락된 이름의 빈 줄을 출력하지 않으므로 파일명으로 대조한다.
+        found = {line.strip().replace('\\', '/').rsplit('/', 1)[-1]
+                 for line in result.stdout.splitlines() if line.strip()}
+        missing = []
+        # 다중 이름을 지원하지 않거나 일부 결과만 반환하는 환경에서도 확인한다.
+        # 정상 설치에서는 한 번의 프로세스 호출만 필요하다.
+        for name in targets:
+            if name not in found:
+                result = probe((name,))
+                if result.returncode != 0 or not result.stdout.strip():
+                    missing.append(name)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        print(f'사전 검사 실패: 스타일 읽기 또는 kpsewhich 실행 오류: {exc}. {guide}', file=sys.stderr)
         return False
-    print('사전 검사 통과: ' + ', '.join(PREFLIGHT_FILES))
+    if missing:
+        remedies = '; '.join(f'{name} → tlmgr install {TEXLIVE_PACKAGES[name]}' if name in TEXLIVE_PACKAGES
+                             else f'{name} → tlmgr search --global --file /{name}'
+                             if re.fullmatch(r'[A-Za-z0-9._-]+', name)
+                             else f'{name!r} → 이 파일 이름으로 tlmgr search --global --file 을 사용해 제공 패키지를 찾으세요'
+                             for name in missing)
+        print(f'사전 검사 실패: TeX Live 에서 {", ".join(missing)} 을 찾지 못했습니다. '
+              f'{remedies}. 다른 패키지도 누락되면 전체 설치(full scheme, tlmgr install scheme-full)를 권장합니다. '
+              f'{guide}', file=sys.stderr)
+        return False
+    print(f'사전 검사 통과: {len(targets)}개 파일 확인: ' + ', '.join(targets))
     return True
 
 

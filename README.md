@@ -77,21 +77,32 @@ subjects.json                 폴더명 ↔ 과목명 대응표
 
 이 저장소는 `kotex` + `fontspec` 과 **UnBatang·UnDotum** 을 사용합니다. 두 글꼴은 TeX Live 의
 `unfonts-core` 패키지에 포함되므로 Windows 에 글꼴을 따로 설치할 필요가 없습니다.
-UnBatang 에 없는 한자는 TeX Live `baekmuk` 패키지의 **Baekmuk Batang**(`batang.ttf`)으로 대체합니다.
+UnBatang 에 없는 한자는 TeX Live `baekmuk` 패키지의 **Baekmuk Batang**(`batang.ttf`)으로 대체합니다. 본문 라틴 문자는 TeX Live `lm` 패키지의 **Latin Modern Roman** 입니다.
 시스템 글꼴을 쓰려면 fontconfig 에 Windows 글꼴 폴더를 알려 주는 `genlocalconf` 설정이 필요하지만,
 이 저장소의 번들 글꼴에는 필요하지 않습니다. KTUG 예제의 oblivoir·Noto 대신 기존 클래스·글꼴을 유지해 조판 결과를 보존합니다.
 
-설치 확인(터미널):
+설치 확인(터미널): 아래 명령은 모든 글꼴과 kotex 를 확인합니다. `tools/build.py` 는 이들에 더해
+`latex/kapa-exam.sty` 가 `RequirePackage`·`RequirePackageWithOptions`·`usepackage` 로 직접 로드하는 모든 패키지도 자동으로 검사하고 확인한 파일 수를 출력합니다.
 
 ```bash
 kpsewhich UnBatang.ttf
+kpsewhich UnDotum.ttf
 kpsewhich batang.ttf
+kpsewhich lmroman10-regular.otf
+kpsewhich kotex.sty
 xelatex --version
 ```
 
-- 글꼴을 찾지 못하면 TLShell/tlmgr 로 `unfonts-core` 를 설치하세요: `tlmgr install unfonts-core baekmuk`.
+- `kotex.sty` 가 없으면 TeX Live 의 [`kotex-utf`](https://ctan.org/pkg/kotex-utf) 를 설치하세요.
+  글꼴은 UnBatang·UnDotum → `unfonts-core`, Baekmuk Batang → `baekmuk`, Latin Modern Roman → `lm` 입니다.
+  한꺼번에 설치: `tlmgr install kotex-utf unfonts-core baekmuk lm`.
+- 다른 패키지가 누락되면 사전 검사가 파일별 실제 TeX Live 패키지 설치 명령을 안내합니다
+  (예: `tlmgr install pgf`, `tlmgr install tools`, `tlmgr install graphics`).
+  알려지지 않은 파일은 파일명이 `[A-Za-z0-9._-]+` 에 해당할 때만 실행 가능한 조회 명령(예: `tlmgr search --global --file /example.sty`)을 안내합니다.
+  `+`·공백·`$HOME`·백틱·괄호·한글 등이 포함된 파일명은 실행 명령 대신 파일명과 `tlmgr search --global --file` 로 제공 패키지를 찾으라는 설명만 표시합니다.
+  권장하는 전체 설치(full scheme, `tlmgr install scheme-full`)도 사용할 수 있습니다.
 - 글꼴 캐시 문제는 `fc-cache -fv` 로 갱신하세요(TeX Live 의 bin 경로가 PATH 에 있어야 합니다).
-- `tools/build.py` 는 컴파일 전에 `kpsewhich` 로 UnBatang·UnDotum·Baekmuk Batang·kotex 를 확인하고,
+- `tools/build.py` 는 컴파일 전에 `kpsewhich` 로 UnBatang·UnDotum·Baekmuk Batang·Latin Modern Roman·kotex 와 스타일의 모든 직접 패키지 의존성을 확인하고,
   저장소 절대 경로의 비 ASCII 문자·공백은 경고합니다. 검사를 생략하려면 `--skip-preflight` 를 사용합니다
   (XeLaTeX 의 PATH 확인은 유지). 사전 검사 테스트: `python tools/test_build.py`.
 
