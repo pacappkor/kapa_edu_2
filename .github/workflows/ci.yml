@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: Reject tracked symlinks
-        run: python -B tools/ci_integrity.py --symlinks-only
+        run: python -I -B tools/ci_integrity.py --symlinks-only
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -36,11 +36,11 @@ jobs:
           CI_EVENT: ${{ github.event_name }}
           CI_BASE: ${{ github.event.pull_request.base.sha }}
           CI_BEFORE: ${{ github.event.before }}
-        run: python -B tools/ci_changes.py
+        run: python -I -B tools/ci_changes.py
       # No exam-source downloads or TeX installation; validators use the checkout only.
       - name: Validate structure and Markdown prose
         if: steps.changes.outputs.validate == 'true'
-        run: python -B tools/validate.py --write-status
+        run: python -I -B tools/validate.py --write-status
       - name: Check generated status is current
         if: steps.changes.outputs.validate == 'true'
         run: |
@@ -51,14 +51,14 @@ jobs:
             echo "$STATUS"
             exit 1
           fi
-      - name: Discover all unit tests
+      - name: Discover unit tests and check package layout
         if: steps.changes.outputs.tests == 'true'
         run: bash tools/ci_tests.sh
       - name: Check build script Python syntax (no TeX)
         if: steps.changes.outputs.build == 'true'
-        run: python -B -c "from pathlib import Path; compile(Path('tools/build.py').read_bytes(), 'tools/build.py', 'exec')"
+        run: python -I -B -c "from pathlib import Path; compile(Path('tools/build.py').read_bytes(), 'tools/build.py', 'exec')"
       - name: Check generated blobs and whole working tree
-        run: python -B tools/ci_integrity.py docs/STATUS.md docs/status.json
+        run: python -I -B tools/ci_integrity.py docs/STATUS.md docs/status.json
       - name: Check diff whitespace
         env:
           BASE_SHA: ${{ steps.changes.outputs.whitespace_base }}

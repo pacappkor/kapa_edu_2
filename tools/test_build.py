@@ -9,7 +9,10 @@ import unittest
 from unittest.mock import patch
 import tempfile
 
-import build
+if __package__:
+    from . import build
+else:
+    import build
 
 
 class PreflightTests(unittest.TestCase):

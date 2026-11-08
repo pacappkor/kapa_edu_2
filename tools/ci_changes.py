@@ -14,6 +14,8 @@ def classify(paths, all_checks=False):
     for path in paths:
         if path.startswith(('.github/workflows/', 'tools/')):
             return dict.fromkeys(GROUPS, True)
+        if path.startswith('latex/'):
+            flags['tests'] = flags['build'] = True
         if path.endswith('.md'):
             # validate.py combines structure and prose checks in one entry point.
             flags['validate'] = True

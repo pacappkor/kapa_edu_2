@@ -34,6 +34,8 @@ class BaseTests(unittest.TestCase):
                 resolved = dict(line.split('=', 1) for line in result.splitlines())
                 self.assertEqual(resolved['whitespace_base'], base)
                 self.assertEqual(resolved['all'], str(all_checks).lower())
+                if event == 'pull_request' and all_checks:
+                    self.assertEqual(resolved['base'], '')
                 if all_checks and base == git('rev-parse', 'HEAD'):
                     self.assertIn('rewind introduces no new commits', summary.read_text())
                 diff = subprocess.run(['git', 'diff', '--check', base, 'HEAD'],
@@ -64,8 +66,10 @@ class BaseTests(unittest.TestCase):
             commit('base\nbad  \nclean tip\n')
             check('push', before, empty, True)
             check('workflow_dispatch', before, empty, True)
-            check('pull_request', before, empty, False)
-            check('push', git('rev-parse', 'HEAD'), empty, False)
+            check('pull_request', before, empty, True)
+            commit('base\nbad  \nsecond orphan commit\n')
+            check('pull_request', before, empty, True)
+            check('push', git('rev-parse', 'HEAD'), git('rev-parse', 'HEAD'), False, bad=False)
 
 
 if __name__ == '__main__':

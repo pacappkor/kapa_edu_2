@@ -19,7 +19,7 @@ class IntegrityTests(unittest.TestCase):
                 return subprocess.check_output(['git', *args], cwd=root, input=data).decode().strip()
 
             def check(ok):
-                result = subprocess.run([sys.executable, '-B', str(SCRIPT), 'generated'],
+                result = subprocess.run([sys.executable, '-I', '-B', str(SCRIPT), 'generated'],
                                         cwd=root, capture_output=True)
                 self.assertEqual(result.returncode == 0, ok, result.stderr)
 
@@ -52,7 +52,7 @@ class IntegrityTests(unittest.TestCase):
             git('update-index', '--add', '--cacheinfo', '120000', link, 'generated')
             git('commit', '-qm', 'symlink generated file')
             check(False)
-            result = subprocess.run([sys.executable, '-B', str(SCRIPT), '--symlinks-only'],
+            result = subprocess.run([sys.executable, '-I', '-B', str(SCRIPT), '--symlinks-only'],
                                     cwd=root, capture_output=True)
             self.assertNotEqual(result.returncode, 0)
 

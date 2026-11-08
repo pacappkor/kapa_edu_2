@@ -121,7 +121,7 @@ GitHub Actions 는 PR, `main` 푸시, 수동 실행에서 Python 3.12 로 다음
 
 - `python tools/validate.py --write-status`: 구조·배점 경고와 Markdown 본문 범위 표기 검사
 - 생성한 `docs/STATUS.md` · `docs/status.json` 이 커밋된 내용과 같은지 확인
-- `tools/test_*.py` 단위 테스트 자동 탐색(`tools/test_build.py` 포함, 파일이 없으면 통과)
+- `tools/**/test_*.py` 표준 unittest 탐색 및 패키지 구조·요약 기반 완료 확인(`tools/test_build.py` 포함)
 - `python -m py_compile tools/build.py`: 빌드 도구의 Python 구문 검사
 - PR 기준 커밋과의 `git diff --check`: 변경 줄 공백 오류 검사
 
@@ -133,6 +133,44 @@ PR 은 존재하는 기준 SHA, 일반 푸시는 조상인 `before` 를 사용�
 
 외부 시험 자료 다운로드·비밀값·TeX 설치는 사용하지 않습니다. 빌드 도구에는 TeX 없는 생성 모드가 없어
 PDF 컴파일·실제 글꼴 검사·원본 대조는 로컬 검토 절차로 남깁니다.
+
+### 표준 테스트 탐색과 위협 모델
+
+저장소 루트에서 `python -I -B tools/ci_tests_supervise.py` 를 실행한다.
+감독 실행기는 먼저 `python -I -B tools/ci_layout_check.py` 로 구조만 검사한다.
+이 검사는 tools 코드를 import하지 않으며, `tools/**/test_*.py` 파일이 없거나
+테스트 파일명이 unittest의 파일명 정규식에 맞지 않으면 실패한다.
+패키지 폴더명은 Python 3.12·3.14의 표준 탐색처럼 식별자·예약어 여부를 검사하지 않는다
+(`class`, `my-pkg`, `123abc`도 허용).
+테스트 폴더에서 `tools/` 까지의 각 폴더에는 `__init__.py` 파일이 있어야 한다.
+
+그다음 저장소 루트에서 다음 **표준 명령을 그대로** 별도 프로세스로 실행한다.
+
+```sh
+python -I -B -m unittest discover -s tools -t . -p "test_*.py" -v
+```
+
+Python 3.12·3.14에서 `-I` 와 함께 사용해도 unittest의 `-t .` 가 저장소 루트를
+검색 경로에 추가하므로 tools 패키지를 탐색한다. 별도 로더, import 도달 관찰자,
+import 캐시 조작, 완료 표지 없이 표준 unittest의 import·load_tests·skip 동작을 따른다.
+테스트는 패키지 import 또는 테스트 파일 자체의 최소한의 형제 경로 설정을 사용한다.
+`-B` 는 바이트코드 생성을 막으며 CI는 `PYTHONDONTWRITEBYTECODE=1` 도 설정한다.
+
+stdout·stderr는 그대로 출력하되 판정에 필요한 경계 이전 stderr만 메모리에 보관한다.
+성공하려면 종료 코드가 0이고, 외부 테스트 프로세스 종료 직후 이미 버퍼에 있는 stderr를
+비차단으로 수집해 경계를 기록한다. 각 수집은 시작 시 대기 중인 바이트 수로 제한하여
+계속 출력하는 하위 프로세스도 잠금을 무한히 점유하지 못하며 종료 후 10초 대기를 지킨다.
+경계 이전 stderr의 마지막 `Ran N tests` 요약과 그 직후 비어 있지 않은 줄의 `OK` 또는
+`OK (...)` 가 모두 있어야 한다. 이후 하위 프로세스 출력은 표시하되 판정에서는 제외한다.
+N은 1 이상이어야 하며, 0이면 OK 줄에
+`skipped=K` (K ≥ 1)가 있어야 한다. `os._exit(0)` 같은 우발적 조기 종료로 요약이
+없거나, 빈 실행·실패 종료·마지막 OK 누락이면 원인을 표시하고 실패한다.
+
+테스트 파일과 패키지 초기화 코드는 PR에서 검토하는 **신뢰된 코드**이며 임의의 코드를
+실행할 수 있다. 이 검사는 패키지 구조와 출력 기반 완료 여부만 확인하는 것이지,
+파일별 탐색 도달·모든 테스트의 실행을 증명하거나 샌드박스·악성 테스트 방어를 제공하지 않는다.
+신뢰된 load_tests나 result.stop()의 동작도 표준 unittest에 맡긴다.
+고의적인 출력 위조나 우회는 CI가 아니라 코드 리뷰에서 차단한다.
 
 ## 버전과 변경 이력
 

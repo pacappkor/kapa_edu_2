@@ -12,7 +12,12 @@ fi
 if [ "${CI_EVENT:-}" != workflow_dispatch ] && [ -n "$candidate" ] &&
    [[ ! "$candidate" =~ ^0+$ ]] &&
    git rev-parse --verify --quiet "$candidate^{commit}" >/dev/null; then
-  if [ "${CI_EVENT:-}" = pull_request ] || git merge-base --is-ancestor "$candidate" HEAD; then
+  if [ "${CI_EVENT:-}" = pull_request ]; then
+    if git merge-base "$candidate" HEAD >/dev/null; then
+      base=$candidate
+      all=false
+    fi
+  elif git merge-base --is-ancestor "$candidate" HEAD; then
     base=$candidate
     all=false
   else

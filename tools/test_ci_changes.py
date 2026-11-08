@@ -5,8 +5,12 @@ import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
-import ci_changes
-from ci_changes import classify
+if __package__:
+    from . import ci_changes
+else:
+    import ci_changes
+
+classify = ci_changes.classify
 
 
 class ChangeSelectionTests(unittest.TestCase):
@@ -21,7 +25,9 @@ class ChangeSelectionTests(unittest.TestCase):
             self.assertTrue(all(classify([path]).values()))
 
     def test_latex(self):
-        self.assertEqual(classify(['latex/kapa-exam.sty']), dict(validate=False, tests=False, build=True))
+        self.assertTrue(classify(['latex/README.md'])['tests'])
+        self.assertTrue(classify(['latex/fonts/example.otf'])['tests'])
+        self.assertEqual(classify(['latex/kapa-exam.sty']), dict(validate=False, tests=True, build=True))
 
     def test_force_all(self):
         self.assertTrue(all(classify(['README.md'], all_checks=True).values()))
