@@ -11,6 +11,24 @@ import json, pathlib, re, sys, collections
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SKIP = {'latex', 'tools', 'build', 'docs', 'skills', 'sources', '.git', '.github'}
 
+def markdown_tilde_errors():
+    """Markdown 본문의 물결표(~)는 GitHub 에서 두 개가 한 줄에 있으면 취소선(~텍스트~)으로 렌더링된다.
+    범위는 '–'(en dash)로 쓴다. 코드 스팬(`...`)과 코드 블록 안은 검사하지 않는다."""
+    out = []
+    for md in sorted(ROOT.rglob('*.md')):
+        if {'.git', 'build'} & set(md.relative_to(ROOT).parts):
+            continue
+        fence = False
+        for i, line in enumerate(md.read_text(encoding='utf-8').split('\n'), 1):
+            if re.match(r'\s*(```|~~~)', line):
+                fence = not fence; continue
+            if fence:
+                continue
+            prose = re.sub(r'`+[^`]*`+', '', line)
+            if '~' in prose:
+                out.append(f'{md.relative_to(ROOT).as_posix()}:{i}: 범위 물결표 "~" 대신 "–" 를 쓴다(GitHub 취소선 방지)')
+    return out
+
 def main():
     sys.stdout.reconfigure(encoding='utf-8')
     write = '--write-status' in sys.argv
@@ -42,6 +60,7 @@ def main():
             table.append(dict(subject=sd.name, round=int(rd.name), problems=len(files), points=pts, pending=st['pending'],
                               proofread=st['proofread'], flags=dict(flags), reviewflags=rflags,
                               instructions=(rd / '00.tex').exists()))
+    errors += markdown_tilde_errors()
     print(f'errors: {len(errors)}  warnings: {len(warns)}')
     for e in errors: print('ERROR', e)
     for w in warns: print('WARN ', w)
