@@ -69,7 +69,6 @@ jobs:
             BASE_SHA=HEAD^
           fi
           if [ "$BASE_SHA" = 'HEAD^' ] && ! git rev-parse --verify --quiet "HEAD^{commit}^" >/dev/null; then
-            echo "Skipping whitespace check: no parent commit exists."
-          else
-            git diff --check "$BASE_SHA" HEAD
+            BASE_SHA=$(git hash-object -t tree /dev/null)
           fi
+          git diff --check "$BASE_SHA" HEAD
