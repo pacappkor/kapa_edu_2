@@ -58,8 +58,42 @@ subjects.json                 폴더명 ↔ 과목명 대응표
 - 그래프·도식·단순 도면은 문항 파일 안에 **TikZ/pgfplots** 로 재현합니다(라벨·눈금·선 모양을 원본과 동일하게, 원본 대조 후 `flags` 에 `tikz`).
 - 정확한 재현이 어려운 그림만 `figures/NN-k.png` 로 두고 `\qfigure` 로 넣으며, `python tools/optimize_figures.py` 로 용량을 줄입니다. SVG 는 XeLaTeX 에서 직접 쓸 수 없어 사용하지 않습니다.
 
+## 개발 환경 (한글 LaTeX)
+
+필요: **TeX Live 2024 이상 전체 설치**(XeLaTeX, kotex, unfonts-core 포함), **Python 3.10+**.
+컴파일 엔진은 XeLaTeX 입니다.
+
+### Windows 설치
+
+[KTUG Windows TeX Live 안내](https://www.ktug.org/getting-started/windows-texlive/)
+(준비·설치·글꼴 문서, 2026-11-08 확인)를 참고하세요.
+
+1. winget 과 터미널을 준비하고, **한글·공백 없는 경로**(예: `C:\work\kapa_edu_2`)에 저장소를 복제합니다.
+   폴더명·파일명에도 한글·공백을 피하세요. KTUG 안내에 따르면 프로그램에 따라 이런 경로에서 TeX Live 오류가 날 수 있습니다.
+2. [TeX Live ISO (kakao 미러)](https://mirror.kakao.com/CTAN/systems/texlive/Images/texlive.iso)를 내려받아
+   `install-tl-windows.bat` 를 실행하고 기본 전체 설치(full scheme)를 선택합니다.
+3. 설치 후 TLShell 에서 저장소를 `https://mirror.kakao.com/CTAN/systems/texlive/tlnet` 으로 설정하고
+   약 한 달에 한 번 업데이트합니다. Python 은 별도로 설치합니다.
+
+이 저장소는 `kotex` + `fontspec` 과 **UnBatang·UnDotum** 을 사용합니다. 두 글꼴은 TeX Live 의
+`unfonts-core` 패키지에 포함되므로 Windows 에 글꼴을 따로 설치할 필요가 없습니다.
+시스템 글꼴을 쓰려면 fontconfig 에 Windows 글꼴 폴더를 알려 주는 `genlocalconf` 설정이 필요하지만,
+이 저장소의 번들 글꼴에는 필요하지 않습니다. KTUG 예제의 oblivoir·Noto 대신 기존 클래스·글꼴을 유지해 조판 결과를 보존합니다.
+
+설치 확인(터미널):
+
+```bash
+kpsewhich UnBatang.ttf
+xelatex --version
+```
+
+- 글꼴을 찾지 못하면 TLShell/tlmgr 로 `unfonts-core` 를 설치하세요: `tlmgr install unfonts-core`.
+- 글꼴 캐시 문제는 `fc-cache -fv` 로 갱신하세요(TeX Live 의 bin 경로가 PATH 에 있어야 합니다).
+- `tools/build.py` 는 컴파일 전에 `kpsewhich` 로 UnBatang·UnDotum·kotex 를 확인하고,
+  저장소 절대 경로의 비 ASCII 문자·공백은 경고합니다. 검사를 생략하려면 `--skip-preflight` 를 사용합니다
+  (XeLaTeX 의 PATH 확인은 유지). 사전 검사 테스트: `python tools/test_build.py`.
+
 ## 빌드 및 검토
-필요: TeX Live 2024 이상(XeLaTeX, kotex, unfonts-core), Python 3.10+.
 
 ```bash
 python tools/build.py                          # 전체

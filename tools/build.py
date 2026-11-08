@@ -64,17 +64,51 @@ def compile_tex(tex, cwd):
     missing = sorted(set(re.findall(r'Missing character: There is no (.) ', logtxt)))
     return r.returncode == 0, errs[:10], missing
 
+def preflight():
+    """컴파일 전에 TeX Live 의 한글 패키지·글꼴과 저장소 경로를 확인한다."""
+    if not str(ROOT).isascii() or ' ' in str(ROOT):
+        print(f'경고: 저장소 경로에 비 ASCII 문자 또는 공백이 있습니다: {ROOT}\n'
+              'KTUG Windows 안내는 한글·공백 없는 폴더·파일명을 권장합니다. '
+              '프로그램에 따라 TeX Live 오류가 날 수 있습니다. '
+              'README.md 의 "개발 환경 (한글 LaTeX)" 절을 확인하세요.\n'
+              'https://www.ktug.org/getting-started/windows-texlive/', file=sys.stderr)
+    guide = 'README.md 의 "개발 환경 (한글 LaTeX)" 절을 확인하세요.'
+    kpsewhich = shutil.which('kpsewhich')
+    if kpsewhich is None:
+        print(f'사전 검사 실패: PATH 에 kpsewhich 가 없습니다. TeX Live 설치·PATH 와 {guide}', file=sys.stderr)
+        return False
+    missing = []
+    for name in ('UnBatang.ttf', 'UnDotum.ttf', 'kotex.sty'):
+        try:
+            result = subprocess.run([kpsewhich, name], capture_output=True, text=True,
+                                    encoding='utf-8', errors='replace', timeout=10)
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            print(f'사전 검사 실패: kpsewhich {name} 실행 오류: {exc}. {guide}', file=sys.stderr)
+            return False
+        if result.returncode != 0 or not result.stdout.strip():
+            missing.append(name)
+    if missing:
+        print(f'사전 검사 실패: TeX Live 에서 {", ".join(missing)} 을 찾지 못했습니다. '
+              f'kotex·unfonts-core 설치를 확인하세요(글꼴: tlmgr install unfonts-core). {guide}', file=sys.stderr)
+        return False
+    print('사전 검사 통과: UnBatang.ttf, UnDotum.ttf, kotex.sty')
+    return True
+
+
 def main():
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser()
     ap.add_argument('targets', nargs='*')
     ap.add_argument('--noanswers', action='store_true')
     ap.add_argument('--single')
+    ap.add_argument('--skip-preflight', action='store_true', help='한글 LaTeX 사전 검사 생략')
     a = ap.parse_args()
-    load_subjects()
-    BUILD.mkdir(exist_ok=True)
     if shutil.which('xelatex') is None:
         print('xelatex not found on PATH', file=sys.stderr); return 2
+    if not a.skip_preflight and not preflight():
+        return 2
+    load_subjects()
+    BUILD.mkdir(exist_ok=True)
     report = []
     if a.single:
         f = (ROOT / a.single).resolve()
