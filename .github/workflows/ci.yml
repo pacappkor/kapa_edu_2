@@ -18,6 +18,8 @@ jobs:
   offline-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,9 +53,7 @@ jobs:
           fi
       - name: Discover all unit tests
         if: steps.changes.outputs.tests == 'true'
-        # Empty discovery is valid until test files arrive on main (also on Python 3.14+).
-        run: >-
-          python -B -c "import unittest; suite = unittest.defaultTestLoader.discover('tools', pattern='test_*.py'); result = unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+        run: bash tools/ci_tests.sh
       - name: Check build script Python syntax (no TeX)
         if: steps.changes.outputs.build == 'true'
         run: python -B -c "from pathlib import Path; compile(Path('tools/build.py').read_bytes(), 'tools/build.py', 'exec')"
@@ -62,4 +62,4 @@ jobs:
       - name: Check diff whitespace
         env:
           BASE_SHA: ${{ steps.changes.outputs.whitespace_base }}
-        run: git diff --check "$BASE_SHA" HEAD
+        run: bash tools/ci_whitespace.sh "$BASE_SHA"

@@ -57,7 +57,7 @@ def main():
         summary.write('## CI check selection\n\n')
         for group, enabled in flags.items():
             summary.write(f'- {group}: {"selected" if enabled else "skipped"}\n')
-        summary.write('- whitespace: always selected\n')
+        summary.write('- whitespace: selected unless no new commits (see resolver note)\n')
     print(flags)
 
 

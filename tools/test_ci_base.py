@@ -16,7 +16,7 @@ class BaseTests(unittest.TestCase):
             root = Path(directory)
 
             def git(*args):
-                return subprocess.check_output(['git', *args], cwd=root).decode().strip()
+                return subprocess.check_output(['git', *args], cwd=root, input=b'').decode().strip()
 
             def commit(text):
                 (root / 'README.md').write_bytes(text.encode())
@@ -25,13 +25,17 @@ class BaseTests(unittest.TestCase):
                 return git('rev-parse', 'HEAD')
 
             def check(event, before, base, all_checks, bad=True):
+                summary = root / 'summary'
+                summary.unlink(missing_ok=True)
                 result = subprocess.check_output(
                     ['bash', str(TOOLS / 'ci_base.sh')], cwd=root, text=True,
                     env={**os.environ, 'CI_EVENT': event, 'CI_BASE': before,
-                         'CI_BEFORE': before})
+                         'CI_BEFORE': before, 'GITHUB_STEP_SUMMARY': str(summary)})
                 resolved = dict(line.split('=', 1) for line in result.splitlines())
                 self.assertEqual(resolved['whitespace_base'], base)
                 self.assertEqual(resolved['all'], str(all_checks).lower())
+                if all_checks and base == git('rev-parse', 'HEAD'):
+                    self.assertIn('rewind introduces no new commits', summary.read_text())
                 diff = subprocess.run(['git', 'diff', '--check', base, 'HEAD'],
                                       cwd=root, capture_output=True)
                 self.assertEqual(diff.returncode != 0, bad)
@@ -51,6 +55,8 @@ class BaseTests(unittest.TestCase):
                 check('push', missing, empty, True)
             check('pull_request', 'f' * 40, empty, True)
             check('workflow_dispatch', before, early, True, bad=False)
+            git('checkout', '-q', '--detach', early)
+            check('push', before, early, True, bad=False)
             git('checkout', '-q', '--detach', initial)
             commit('base\nrewritten bad  \n')
             check('push', before, initial, True)

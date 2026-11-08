@@ -4,6 +4,7 @@
 set -euo pipefail
 base=
 all=true
+rewind=false
 candidate=${CI_BEFORE:-}
 if [ "${CI_EVENT:-}" = pull_request ]; then
   candidate=${CI_BASE:-}
@@ -17,10 +18,21 @@ if [ "${CI_EVENT:-}" != workflow_dispatch ] && [ -n "$candidate" ] &&
   else
     # A rewritten branch must run every group, even with a common ancestor.
     base=$(git merge-base "$candidate" HEAD) || base=
+    # Rewinding to an ancestor otherwise produces an empty HEAD..HEAD diff.
+    if [ "$base" = "$(git rev-parse HEAD)" ]; then
+      rewind=true
+    fi
   fi
 fi
 whitespace=$base
-if ! git rev-parse --verify --quiet 'HEAD^' >/dev/null; then
+if [ "$rewind" = true ]; then
+  whitespace=$(git rev-parse HEAD)
+  note='Whitespace check skipped: rewind introduces no new commits; all other checks selected.'
+  printf '%s\n' "$note" >&2
+  if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+    printf '\n- %s\n' "$note" >> "$GITHUB_STEP_SUMMARY"
+  fi
+elif ! git rev-parse --verify --quiet 'HEAD^' >/dev/null; then
   whitespace=$(git hash-object -t tree /dev/null)
 elif [ "${CI_EVENT:-}" = workflow_dispatch ]; then
   whitespace=$(git rev-parse 'HEAD^')
