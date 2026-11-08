@@ -10,28 +10,6 @@
 
 ## [Unreleased]
 
-- unittest의 패키지 폴더명 허용 범위를 Python 3.12·3.14와 맞추고, 연속 출력 시 파이프 수집을 대기 바이트 수로 제한해 종료 지연을 막았다. 판정용 메모리에는 경계 이전 stderr만 보관하며 비식별자 폴더·연속 출력·종료 경계 회귀 테스트를 추가했다.
-
-- unittest 요약 뒤 stderr 진단 출력을 허용하고 Python 3.10 인코딩 및 Windows 비차단 파이프 호환성을 보완했다. PR 기준과 HEAD의 공통 조상이 없으면 전체 검사·빈 트리 공백 검사를 선택한다.
-
-- GitHub Actions CI는 모든 PR·`main` 푸시·수동 실행에서 단일 작업으로 오프라인 검사를 수행한다. 권한은 `contents: read`이며 비밀정보나 외부 조회를 사용하지 않는다.
-- `tools/ci_tests_supervise.py`가 표준 `python -I -B -m unittest discover -s tools -t . -p "test_*.py" -v` 명령을 실행한다. `tools/ci_layout_check.py`는 unittest와 같은 파일명 정규식·패키지 초기화 파일을 검사한다. 감독 프로세스는 외부 프로세스 종료 직후 버퍼를 비차단으로 수집해 경계를 기록하고, 경계 이전의 마지막 unittest 요약 직후 OK와 종료 코드로 완료를 확인한다. 이후 하위 프로세스 출력은 표시만 하고 판정에서 제외한다. 하위 프로세스가 출력 파이프를 유지하면 제한 시간 뒤 수집을 중단하고 경고한다.
-- CI Python 보조 스크립트와 이를 호출하는 테스트는 `python -I -B`로 격리 실행하여 도구 폴더의 동명 모듈이 표준 라이브러리를 가리지 않게 하고 바이트코드 생성을 막는다.
-- 변경 경로별로 필요한 검사를 선택하고 실행 요약을 기록한다. `tools/ci_base.sh`는 PR 기준·일반 push의 조상·강제 push의 공통 조상을 확인하며, 기준 누락·고아 루트는 전체 검사와 빈 트리 비교로 대체한다. 되감기 push는 전체 검사를 선택하되 새 커밋이 없어 공백 검사를 건너뛴다.
-- `tools/ci_integrity.py`는 추적 심볼릭 링크를 거부하고 생성물의 HEAD 정규 파일·바이트 일치 및 무시된 파일을 포함한 전체 작업 트리 청결을 확인한다.
-- 검증·생성 현황 최신성·빌드 도구 구문을 검사하며, `latex/**` 변경은 스타일을 읽는 단위 테스트도 선택한다. 공백 검사는 일반 diff의 모든 경로를 검사하고, 빈 트리 비교에서만 `tools/ci_whitespace.sh`에 명시한 기존 원문 문항 파일을 제외한다.
-
-### 변경
-- `tlmgr search --file` 의 정규식 연산자인 `+` 도 실행 명령 대상에서 제외하고, 표준 LaTeX 로더 `RequirePackageWithOptions` 를 토큰 경계를 구분해 인식한다. 옵션 허용·유사 이름 제외와 실제 스타일의 기존 25개 파일 목록을 검증한다.
-- 미등록 파일의 `tlmgr search` 실행 명령은 파일명이 `[A-Za-z0-9._-]+` 에 해당할 때만 표시한다. 그 외에는 파일명의 안전한 표현과 제공 패키지 조회 설명만 표시해 셸의 변수·명령 치환을 피한다. 공백·`$HOME`·백틱·괄호·한글 파일명의 회귀 테스트를 추가했다.
-- 의존성을 TeX 토큰 단위로 읽어 제어 기호·주석·표시용 명령·옵션의 이스케이프된 중괄호를 구분한다. 누락 파일은 확인된 실제 TeX Live 패키지 설치 명령을, 미등록 파일은 안전한 파일명에 한해 실행 가능한 조회 명령을 안내한다. 실제 스타일의 25개 파일 순서와 오류 하위 테스트의 stderr 초기화를 검증한다.
-- 한글 LaTeX 사전 검사가 모든 번들 글꼴(Latin Modern Roman 포함)과 스타일의 직접 패키지 의존성을 실행 시 파싱해 확인한다. 정상 설치는 kpsewhich 일괄 조회 한 번으로 검사하며, 필요하면 파일별 조회로 대체하고 호출당 10초 제한을 유지한다.
-- 누락 파일별 TeX Live 설치 안내와 검사 파일 수를 출력하고, README 에 `kotex-utf` 및 전체 설치 해결책을 명시했다. 테스트는 검사 대상 함수를 공유하고 경로 경고 하위 테스트마다 stderr 를 초기화한다.
-
-### 추가
-- README 에 KTUG 기반 Windows 한글 LaTeX 환경 설정·경로 규칙·번들 글꼴 확인·문제 해결 안내를 추가했다.
-- `tools/build.py` 에 UnBatang·UnDotum·Baekmuk Batang(한자 대체 글꼴)·kotex 사전 검사와 경로 경고, `--skip-preflight` 옵션을 추가했다. `python tools/test_build.py` 로 사전 검사 동작을 검증한다.
-
 <!--
 ### 새 회차             ← 새 시험 문제 추가 (회차별 표: docs/RELEASING.md 템플릿)
 ### 정정                ← 문항 오탈자·표·그림 정정 (파일, 내용, 근거)
@@ -41,9 +19,36 @@
 ### 호환성 깨짐         ← 폴더 구조·파일명·메타데이터 형식·LaTeX 매크로 변경
 -->
 
+## [v0.1.0] - 2026-11-09
+
+한글 LaTeX 빌드 사전 검사와 경량 GitHub Actions CI 를 도입했다(새 도구 → MINOR). 문항·정답 내용 변경은 없다.
+
+### 추가
+- GitHub Actions CI는 모든 PR·`main` 푸시·수동 실행에서 단일 작업으로 오프라인 검사를 수행한다. 권한은 `contents: read`이며 비밀정보나 외부 조회를 사용하지 않는다.
+- `tools/ci_tests_supervise.py`가 표준 `python -I -B -m unittest discover -s tools -t . -p "test_*.py" -v` 명령을 실행한다. `tools/ci_layout_check.py`는 unittest와 같은 파일명 정규식·패키지 초기화 파일을 검사한다. 감독 프로세스는 외부 프로세스 종료 직후 버퍼를 비차단으로 수집해 경계를 기록하고, 경계 이전의 마지막 unittest 요약 직후 OK와 종료 코드로 완료를 확인한다. 이후 하위 프로세스 출력은 표시만 하고 판정에서 제외한다. 하위 프로세스가 출력 파이프를 유지하면 제한 시간 뒤 수집을 중단하고 경고한다.
+- CI Python 보조 스크립트와 이를 호출하는 테스트는 `python -I -B`로 격리 실행하여 도구 폴더의 동명 모듈이 표준 라이브러리를 가리지 않게 하고 바이트코드 생성을 막는다.
+- 변경 경로별로 필요한 검사를 선택하고 실행 요약을 기록한다. `tools/ci_base.sh`는 PR 기준·일반 push의 조상·강제 push의 공통 조상을 확인하며, 기준 누락·고아 루트는 전체 검사와 빈 트리 비교로 대체한다. 되감기 push는 전체 검사를 선택하되 새 커밋이 없어 공백 검사를 건너뛴다.
+- `tools/ci_integrity.py`는 추적 심볼릭 링크를 거부하고 생성물의 HEAD 정규 파일·바이트 일치 및 무시된 파일을 포함한 전체 작업 트리 청결을 확인한다.
+- 검증·생성 현황 최신성·빌드 도구 구문을 검사하며, `latex/**` 변경은 스타일을 읽는 단위 테스트도 선택한다. 공백 검사는 일반 diff의 모든 경로를 검사하고, 빈 트리 비교에서만 `tools/ci_whitespace.sh`에 명시한 기존 원문 문항 파일을 제외한다.
+- unittest의 패키지 폴더명 허용 범위를 Python 3.12·3.14와 맞추고, 연속 출력 시 파이프 수집을 대기 바이트 수로 제한해 종료 지연을 막았다. 판정용 메모리에는 경계 이전 stderr만 보관하며 비식별자 폴더·연속 출력·종료 경계 회귀 테스트를 추가했다.
+- unittest 요약 뒤 stderr 진단 출력을 허용하고 Python 3.10 인코딩 및 Windows 비차단 파이프 호환성을 보완했다. PR 기준과 HEAD의 공통 조상이 없으면 전체 검사·빈 트리 공백 검사를 선택한다.
+- README 에 KTUG 기반 Windows 한글 LaTeX 환경 설정·경로 규칙·번들 글꼴 확인·문제 해결 안내를 추가했다.
+- `tools/build.py` 에 UnBatang·UnDotum·Baekmuk Batang(한자 대체 글꼴)·kotex 사전 검사와 경로 경고, `--skip-preflight` 옵션을 추가했다. `python tools/test_build.py` 로 사전 검사 동작을 검증한다.
+
+### 변경
+- `tlmgr search --file` 의 정규식 연산자인 `+` 도 실행 명령 대상에서 제외하고, 표준 LaTeX 로더 `RequirePackageWithOptions` 를 토큰 경계를 구분해 인식한다. 옵션 허용·유사 이름 제외와 실제 스타일의 기존 25개 파일 목록을 검증한다.
+- 미등록 파일의 `tlmgr search` 실행 명령은 파일명이 `[A-Za-z0-9._-]+` 에 해당할 때만 표시한다. 그 외에는 파일명의 안전한 표현과 제공 패키지 조회 설명만 표시해 셸의 변수·명령 치환을 피한다. 공백·`$HOME`·백틱·괄호·한글 파일명의 회귀 테스트를 추가했다.
+- 의존성을 TeX 토큰 단위로 읽어 제어 기호·주석·표시용 명령·옵션의 이스케이프된 중괄호를 구분한다. 누락 파일은 확인된 실제 TeX Live 패키지 설치 명령을, 미등록 파일은 안전한 파일명에 한해 실행 가능한 조회 명령을 안내한다. 실제 스타일의 25개 파일 순서와 오류 하위 테스트의 stderr 초기화를 검증한다.
+- 한글 LaTeX 사전 검사가 모든 번들 글꼴(Latin Modern Roman 포함)과 스타일의 직접 패키지 의존성을 실행 시 파싱해 확인한다. 정상 설치는 kpsewhich 일괄 조회 한 번으로 검사하며, 필요하면 파일별 조회로 대체하고 호출당 10초 제한을 유지한다.
+- 누락 파일별 TeX Live 설치 안내와 검사 파일 수를 출력하고, README 에 `kotex-utf` 및 전체 설치 해결책을 명시했다. 테스트는 검사 대상 함수를 공유하고 경로 경고 하위 테스트마다 stderr 를 초기화한다.
+
 ### 정정
 - 문서(Markdown)의 범위 표기 `~` 를 "–" 로 바꿨다. GitHub 는 한 줄에 물결표가 두 개 있으면 그 사이를 취소선으로 표시하기 때문이다(예: `제26~29, 35~37회`).
 - `tools/validate.py` 가 Markdown 본문(코드 스팬·코드 블록 제외)의 `~` 를 오류로 잡는다.
+
+### 검증
+- `tools/validate.py`: errors 0 / warnings 0
+- CI 단위 테스트: Python 3.12·3.14 에서 통과(GitHub Actions 는 Python 3.12)
 
 ## [v0.0.0] - 2026-11-08
 
@@ -85,5 +90,6 @@
   - 가운뎃점 ㆍ/․ 이 쉼표(、)처럼 보이던 문제
   - 결과: 전 과목 빌드 57/57, Overfull 5pt 초과 0
 
-[Unreleased]: https://github.com/pacappkor/kapa_edu_2/compare/v0.0.0...HEAD
+[Unreleased]: https://github.com/pacappkor/kapa_edu_2/compare/v0.1.0...HEAD
+[v0.1.0]: https://github.com/pacappkor/kapa_edu_2/compare/v0.0.0...v0.1.0
 [v0.0.0]: https://github.com/pacappkor/kapa_edu_2/releases/tag/v0.0.0
