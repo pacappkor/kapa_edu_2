@@ -1,0 +1,426 @@
+[
+ {
+  "exam": 2,
+  "round": 19,
+  "part": "p1",
+  "source": "extracted/1008/5024177/2008년 제19회 감정평가사 2차시험 기출문제/1교시.hwp",
+  "staged": "staged/exam2/19/p1.hwp",
+  "sha256": "6572a6f55de4cb494363d41634ac0a821ab44bcf16724a9485bf5db483744bba"
+ },
+ {
+  "exam": 2,
+  "round": 19,
+  "part": "p2",
+  "source": "extracted/1008/5024177/2008년 제19회 감정평가사 2차시험 기출문제/2교시.hwp",
+  "staged": "staged/exam2/19/p2.hwp",
+  "sha256": "8779b6d0dfd13fe2150080c33ca4c820ec2b1927371dbba22402783103c6b69a"
+ },
+ {
+  "exam": 2,
+  "round": 19,
+  "part": "p3",
+  "source": "extracted/1008/5024177/2008년 제19회 감정평가사 2차시험 기출문제/3교시.hwp",
+  "staged": "staged/exam2/19/p3.hwp",
+  "sha256": "e8a1b2efd0845e34db479f34a62dbd585498985c91ea6156e764581726b32b95"
+ },
+ {
+  "exam": 2,
+  "round": 20,
+  "part": "p1",
+  "source": "extracted/1008/5024180/2009년 제20회 감정평가사 2차시험 기출문제/1교시.hwp",
+  "staged": "staged/exam2/20/p1.hwp",
+  "sha256": "a5dfea74c96f13808e0e169217e3959aa351eae67777f094472edeb52bae4d53"
+ },
+ {
+  "exam": 2,
+  "round": 20,
+  "part": "p2",
+  "source": "extracted/1008/5024180/2009년 제20회 감정평가사 2차시험 기출문제/2교시.hwp",
+  "staged": "staged/exam2/20/p2.hwp",
+  "sha256": "f422971fa66760b423d8fab6a4ea7431869c01cf014d9acb5c0b23e5ffc57e32"
+ },
+ {
+  "exam": 2,
+  "round": 20,
+  "part": "p3",
+  "source": "extracted/1008/5024180/2009년 제20회 감정평가사 2차시험 기출문제/3교시.hwp",
+  "staged": "staged/exam2/20/p3.hwp",
+  "sha256": "15765d6e5e3a8d577535a6e15de0005300d313faf52fdb7c62987ec96c71c1ac"
+ },
+ {
+  "exam": 2,
+  "round": 21,
+  "part": "p1",
+  "source": "extracted/1008/5024183/2010년 제21회 감정평가사 2차시험 기출문제/1교시.hwp",
+  "staged": "staged/exam2/21/p1.hwp",
+  "sha256": "8773329e58bc2a50d5301346466d32ddc6d50c3c557994120488a1c4b05faf5d"
+ },
+ {
+  "exam": 2,
+  "round": 21,
+  "part": "p2",
+  "source": "extracted/1008/5024183/2010년 제21회 감정평가사 2차시험 기출문제/2교시.hwp",
+  "staged": "staged/exam2/21/p2.hwp",
+  "sha256": "032be6a789d79ee682ce2be98bc91ad58334207f096bf76a57bdf71af077de08"
+ },
+ {
+  "exam": 2,
+  "round": 21,
+  "part": "p3",
+  "source": "extracted/1008/5024183/2010년 제21회 감정평가사 2차시험 기출문제/3교시.hwp",
+  "staged": "staged/exam2/21/p3.hwp",
+  "sha256": "6eac0d90ff2bbd4067b3ccbfb1716abd768e190242886daf260b455e3566e25d"
+ },
+ {
+  "exam": 2,
+  "round": 22,
+  "part": "p1",
+  "source": "extracted/1008/5040389/2011년 제22회 감정평가사 2차시험 기출문제/1교시.hwp",
+  "staged": "staged/exam2/22/p1.hwp",
+  "sha256": "d7ee69ad41d828eb53d845819fe5de46b364ba3aa9651eecac7c135868508a2b"
+ },
+ {
+  "exam": 2,
+  "round": 22,
+  "part": "p2",
+  "source": "extracted/1008/5040389/2011년 제22회 감정평가사 2차시험 기출문제/2교시.hwp",
+  "staged": "staged/exam2/22/p2.hwp",
+  "sha256": "2b896fc67c60e2e023636f5ce9ec1057cf74adfadb2adc87026e00ab0a5c90c2"
+ },
+ {
+  "exam": 2,
+  "round": 22,
+  "part": "p3",
+  "source": "extracted/1008/5040389/2011년 제22회 감정평가사 2차시험 기출문제/3교시.hwp",
+  "staged": "staged/exam2/22/p3.hwp",
+  "sha256": "df3d60b3252bf56ec2897b23be731caa6bb8754e7c8fdc1cc68025a6e96da4c6"
+ },
+ {
+  "exam": 2,
+  "round": 23,
+  "part": "p1",
+  "source": "raw/1008/5056012/1교시(감정평가실무).hwp",
+  "staged": "staged/exam2/23/p1.hwp",
+  "sha256": "3330464c32655748b44a510ecf7d104df0f8f4d1a636120e43e3e064daa6854c"
+ },
+ {
+  "exam": 2,
+  "round": 23,
+  "part": "p2",
+  "source": "raw/1008/5056013/2교시(감정평가이론).hwp",
+  "staged": "staged/exam2/23/p2.hwp",
+  "sha256": "b7fa7167ad79a8d6cd56ba87ac59d32ab393febcf7374d54c682ca7554962074"
+ },
+ {
+  "exam": 2,
+  "round": 23,
+  "part": "p3",
+  "source": "raw/1008/5056014/3교시(감정평가 및 보상법규).hwp",
+  "staged": "staged/exam2/23/p3.hwp",
+  "sha256": "62aeb35dbcb0ff4b886f5cb088a457b3fae64b18afde741f7e6454e7850e10c7"
+ },
+ {
+  "exam": 2,
+  "round": 24,
+  "part": "p1",
+  "source": "extracted/1008/5077404/2013년 제24회 감정평가사 2차시험 기출문제/1교시.hwp",
+  "staged": "staged/exam2/24/p1.hwp",
+  "sha256": "3a1e7735b770f957d4c838849e5604ab05341db0510001543c125ae8054c876f"
+ },
+ {
+  "exam": 2,
+  "round": 24,
+  "part": "p2",
+  "source": "extracted/1008/5077404/2013년 제24회 감정평가사 2차시험 기출문제/2교시.hwp",
+  "staged": "staged/exam2/24/p2.hwp",
+  "sha256": "5025bb20e9ce63cb6b9cd23f3304690eb9c84cec1cac22032312423a00e4f9c9"
+ },
+ {
+  "exam": 2,
+  "round": 24,
+  "part": "p3",
+  "source": "extracted/1008/5077404/2013년 제24회 감정평가사 2차시험 기출문제/3교시.hwp",
+  "staged": "staged/exam2/24/p3.hwp",
+  "sha256": "6ed04a2760da938eab585601dcb3a14d9bf72288e3cde61958ac39973765a0ab"
+ },
+ {
+  "exam": 2,
+  "round": 25,
+  "part": "p1",
+  "source": "extracted/1008/5109209/2014년 제25회 감정평가사 2차시험 기출문제/1교시(감정평가실무).hwp",
+  "staged": "staged/exam2/25/p1.hwp",
+  "sha256": "16d9658929e3bbdcddfb25e03a4719a57b971516183538708660cd5fe1fe86c9"
+ },
+ {
+  "exam": 2,
+  "round": 25,
+  "part": "p2",
+  "source": "extracted/1008/5109209/2014년 제25회 감정평가사 2차시험 기출문제/2교시(감정평가이론).hwp",
+  "staged": "staged/exam2/25/p2.hwp",
+  "sha256": "6d3a770f59c570f48e72df4321d1174e848a54da4a7f48ad1c1aed2fc20acdf4"
+ },
+ {
+  "exam": 2,
+  "round": 25,
+  "part": "p3",
+  "source": "extracted/1008/5109209/2014년 제25회 감정평가사 2차시험 기출문제/3교시(감정평가 및 보상법규).hwp",
+  "staged": "staged/exam2/25/p3.hwp",
+  "sha256": "7b924e14f80eb56787828620278047d605a7e0c59cbfc7953673e9324cb01584"
+ },
+ {
+  "exam": 2,
+  "round": 26,
+  "part": "p1",
+  "source": "extracted/1008/5149601/2015년 제26회 감정평가사 2차시험 기출문제/1교시(감정평가실무).pdf",
+  "staged": "staged/exam2/26/p1.pdf",
+  "sha256": "5074485d9d8665da2945dcece926737b9e2d8db3e2f79bac935b3bf504b087f4"
+ },
+ {
+  "exam": 2,
+  "round": 26,
+  "part": "p2",
+  "source": "extracted/1008/5149601/2015년 제26회 감정평가사 2차시험 기출문제/2교시(감정평가이론).pdf",
+  "staged": "staged/exam2/26/p2.pdf",
+  "sha256": "53f6244ae3182ed8db8c5c9ea39ff8a0178b1cb591aeb8682febd576792ed7e6"
+ },
+ {
+  "exam": 2,
+  "round": 26,
+  "part": "p3",
+  "source": "extracted/1008/5149601/2015년 제26회 감정평가사 2차시험 기출문제/3교시(감정평가 및 보상법규).pdf",
+  "staged": "staged/exam2/26/p3.pdf",
+  "sha256": "76f5a5d5123a35e8675f150a96cb54a1d32af4adbae3f462a023d71e0f3e8953"
+ },
+ {
+  "exam": 2,
+  "round": 27,
+  "part": "p1",
+  "source": "extracted/1008/5185401/제27회 감정평가사 2차시험 기출문제/제27회 감정평가사 2차 시험문제지/(1교시 시험문제지)감정평가실무.pdf",
+  "staged": "staged/exam2/27/p1.pdf",
+  "sha256": "d33be4ef82ebaf8dec279c70aa41aac514aad898321e8271339b5553a39a6dde"
+ },
+ {
+  "exam": 2,
+  "round": 27,
+  "part": "p2",
+  "source": "extracted/1008/5185401/제27회 감정평가사 2차시험 기출문제/제27회 감정평가사 2차 시험문제지/(2교시 시험문제지)감정평가이론.pdf",
+  "staged": "staged/exam2/27/p2.pdf",
+  "sha256": "560e1760658f6929800935f4a23fb8da630146a17571f5f89e9d2cd9a0f5acde"
+ },
+ {
+  "exam": 2,
+  "round": 27,
+  "part": "p3",
+  "source": "extracted/1008/5185401/제27회 감정평가사 2차시험 기출문제/제27회 감정평가사 2차 시험문제지/(3교시 시험문제지)감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/27/p3.pdf",
+  "sha256": "f423edd050deeedc2c9ce9f5295a97d12ec34f9a824549d78555d9e83f0af5c6"
+ },
+ {
+  "exam": 2,
+  "round": 28,
+  "part": "p1",
+  "source": "raw/1008/5201712/2017년 감정평가사 2차시험 기출문제(감정평가 실무).pdf",
+  "staged": "staged/exam2/28/p1.pdf",
+  "sha256": "65a3d3e8247f94d2413f72cdebadd8bd6f0bd100859b9f5036ff56680f2e62e3"
+ },
+ {
+  "exam": 2,
+  "round": 28,
+  "part": "p2",
+  "source": "raw/1008/5201712/2017년 감정평가사 2차시험 기출문제(감정평가 이론).pdf",
+  "staged": "staged/exam2/28/p2.pdf",
+  "sha256": "bf29bdf68b0f765cf43bd8d22a73a11d56f13365dcdbf48877610c2f85d604aa"
+ },
+ {
+  "exam": 2,
+  "round": 28,
+  "part": "p3",
+  "source": "raw/1008/5201712/2017년 감정평가사 2차시험 기출문제(감정평가 및 보상법규).pdf",
+  "staged": "staged/exam2/28/p3.pdf",
+  "sha256": "4b07787ad6b482b493f5ad0af4d6e1f2788e53740428061f8be54c4ba88381e2"
+ },
+ {
+  "exam": 2,
+  "round": 29,
+  "part": "p1",
+  "source": "raw/1008/5203398/1교시 감정평가실무.pdf",
+  "staged": "staged/exam2/29/p1.pdf",
+  "sha256": "8c60645d203c3f86130682cd9ebe4429c1200c074a7a8d0cfbf5f993e3978559"
+ },
+ {
+  "exam": 2,
+  "round": 29,
+  "part": "p2",
+  "source": "raw/1008/5203398/2교시 감정평가이론.pdf",
+  "staged": "staged/exam2/29/p2.pdf",
+  "sha256": "871350ee2f48d48b7f5ec239ec8b31c0651686fd493da917744dd0e7ae5fb0d7"
+ },
+ {
+  "exam": 2,
+  "round": 29,
+  "part": "p3",
+  "source": "raw/1008/5203398/3교시 감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/29/p3.pdf",
+  "sha256": "8334758074a11c84c7036a4f9b5a721f6f0d853e6303c2cb6f29fcd8aa99764c"
+ },
+ {
+  "exam": 2,
+  "round": 30,
+  "part": "p1",
+  "source": "raw/1008/5205595/감정평가실무.pdf",
+  "staged": "staged/exam2/30/p1.pdf",
+  "sha256": "203aebd0615b73759ed28fc44de33d7fca0110e44aecc767044f78b54ce8fc24"
+ },
+ {
+  "exam": 2,
+  "round": 30,
+  "part": "p2",
+  "source": "raw/1008/5205595/감정평가이론.pdf",
+  "staged": "staged/exam2/30/p2.pdf",
+  "sha256": "dc06b5e4d49c57143cf9f52b33cc98b179d1c98e4ddd8b38ef7f42167bfc772f"
+ },
+ {
+  "exam": 2,
+  "round": 30,
+  "part": "p3",
+  "source": "raw/1008/5205595/감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/30/p3.pdf",
+  "sha256": "4bb310c3aefe9eb368ccc0be0a7f8cb0997cce9cb9c0395242b43aa1f5a29a34"
+ },
+ {
+  "exam": 2,
+  "round": 31,
+  "part": "p1",
+  "source": "raw/1008/5207673/1교시_감정평가실무.pdf",
+  "staged": "staged/exam2/31/p1.pdf",
+  "sha256": "844429f6b28abf69a7202e04f8e1605424e77b5727b3ad052d11f2947cf444b3"
+ },
+ {
+  "exam": 2,
+  "round": 31,
+  "part": "p2",
+  "source": "raw/1008/5207673/2교시_감정평가이론.pdf",
+  "staged": "staged/exam2/31/p2.pdf",
+  "sha256": "8c3f94f6263c49a182e93a3d94ff6961e1f0c1cef884c7969fc847f7eb1cc712"
+ },
+ {
+  "exam": 2,
+  "round": 31,
+  "part": "p3",
+  "source": "raw/1008/5207673/3교시_감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/31/p3.pdf",
+  "sha256": "badae68b1b025f4c3f47124a76208fb9c859df5ed513b542f007fa580f0c61d6"
+ },
+ {
+  "exam": 2,
+  "round": 32,
+  "part": "all",
+  "source": "raw/1008/5208993/감평 2차 시험지(2021).pdf",
+  "staged": "staged/exam2/32/all.pdf",
+  "sha256": "a3b967096b9b91dd4b4e64bf47e6cb5460e14a6ba1aff56f63aec9e72e846db0"
+ },
+ {
+  "exam": 2,
+  "round": 33,
+  "part": "p1",
+  "source": "raw/1008/5210838/2022년 제33회 감정평가사 2차시험 1교시 문제지(감정평가실무).pdf",
+  "staged": "staged/exam2/33/p1.pdf",
+  "sha256": "21a7922d025300ffe186c762805c088f316c67c78d228a6c80b57e8d769f9cfb"
+ },
+ {
+  "exam": 2,
+  "round": 33,
+  "part": "p2",
+  "source": "raw/1008/5210838/2022년 제33회 감정평가사 2차시험 2교시 문제지(감정평가이론).pdf",
+  "staged": "staged/exam2/33/p2.pdf",
+  "sha256": "32e072120f8f0771b03a4c07eba6615b207a1dce81f62044283daa8721ef98c8"
+ },
+ {
+  "exam": 2,
+  "round": 33,
+  "part": "p3",
+  "source": "raw/1008/5210838/2022년 제33회 감정평가사 2차시험 3교시 문제지(감정평가 및 보상법규).pdf",
+  "staged": "staged/exam2/33/p3.pdf",
+  "sha256": "3611841f1791ba320e45272efbe7a112c9b1a22c714469029a97c3fe9ab86603"
+ },
+ {
+  "exam": 2,
+  "round": 34,
+  "part": "p1",
+  "source": "raw/1008/5212168/1교시 23년도 감정평가사 2차시험_감정평가실무.pdf",
+  "staged": "staged/exam2/34/p1.pdf",
+  "sha256": "6c46a04e1e6815d7184943f271e2ced37c88e65afa9878a458dc49ecbfe79fbf"
+ },
+ {
+  "exam": 2,
+  "round": 34,
+  "part": "p2",
+  "source": "raw/1008/5212168/2교시 23년도 감정평가사 2차시험_감정평가이론.pdf",
+  "staged": "staged/exam2/34/p2.pdf",
+  "sha256": "3cdc48ceb8b1f6662f0a1d3923e97f1c9a4ad2356e4b8b1619dc96399fc77b27"
+ },
+ {
+  "exam": 2,
+  "round": 34,
+  "part": "p3",
+  "source": "raw/1008/5212168/3교시 23년도 감정평가사 2차시험_감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/34/p3.pdf",
+  "sha256": "34899c6635d5f006b5e4aafab25422e8837ad8acae12f3c5524a8e7d7b68242d"
+ },
+ {
+  "exam": 2,
+  "round": 35,
+  "part": "all",
+  "source": "raw/1008/5213532/2024년 제35회 감정평가사 2차시험 문제지.pdf",
+  "staged": "staged/exam2/35/all.pdf",
+  "sha256": "5421700ebd58e8aa18346e52d2580ea4c4b020492df158d70c5af91e5968655d"
+ },
+ {
+  "exam": 2,
+  "round": 36,
+  "part": "p1",
+  "source": "raw/1008/5239325/2025년 제36회 감정평가사 2차 감정평가실무.pdf",
+  "staged": "staged/exam2/36/p1.pdf",
+  "sha256": "e13e5dc35df8f36a9183730cdb598ade4b523d303bdeb81e6c88da87c5e54e68"
+ },
+ {
+  "exam": 2,
+  "round": 36,
+  "part": "p2",
+  "source": "raw/1008/5239325/2025년 제36회 감정평가사 2차 감정평가이론.pdf",
+  "staged": "staged/exam2/36/p2.pdf",
+  "sha256": "baa2e981454d8e10f30e0edbe8e0cb963e1359d3ff624a47167f2d4593c72ce6"
+ },
+ {
+  "exam": 2,
+  "round": 36,
+  "part": "p3",
+  "source": "raw/1008/5239325/2025년 제36회 감정평가사 2차 감정평가 및 보상법규.pdf",
+  "staged": "staged/exam2/36/p3.pdf",
+  "sha256": "602ecc18ce35044246efee2613c091b3ca456ef644feffddc5c9722613cfd302"
+ },
+ {
+  "exam": 2,
+  "round": 37,
+  "part": "p1",
+  "source": "raw/1008/5268128/26년 제37회 감정평가사 2차 (1교시_감정평가실무).pdf",
+  "staged": "staged/exam2/37/p1.pdf",
+  "sha256": "9c6a4fbf1d06f1d827bb8c8ddc6eb7cfb4c9218208540c95e62e772f4bc466c2"
+ },
+ {
+  "exam": 2,
+  "round": 37,
+  "part": "p2",
+  "source": "raw/1008/5268128/26년 제37회 감정평가사 2차 (2교시_감정평가이론).pdf",
+  "staged": "staged/exam2/37/p2.pdf",
+  "sha256": "5b10f1ffb2e39b82260d0d6cad3631ab7429cf80716ad0c1b39b44252d65b32c"
+ },
+ {
+  "exam": 2,
+  "round": 37,
+  "part": "p3",
+  "source": "raw/1008/5268128/26년 제37회 감정평가사 2차 (3교시_감정평가 및 보상 법규).pdf",
+  "staged": "staged/exam2/37/p3.pdf",
+  "sha256": "8e1ae7faa097ea7fb6de300208188992032e44ade9ca767179fedf234f69249a"
+ }
+]

@@ -1,0 +1,645 @@
+[
+ {
+  "subject": "appraisal_practice",
+  "round": 19,
+  "problems": 5,
+  "points": 100,
+  "pending": 0,
+  "proofread": 5,
+  "flags": {
+   "tikz": 2
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 20,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 21,
+  "problems": 5,
+  "points": 100,
+  "pending": 0,
+  "proofread": 5,
+  "flags": {
+   "figure": 1,
+   "tikz": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 22,
+  "problems": 6,
+  "points": 100,
+  "pending": 0,
+  "proofread": 6,
+  "flags": {
+   "figure": 1,
+   "tikz": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 23,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 24,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 25,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {
+   "tikz": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 26,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {
+   "figure": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 27,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 28,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 29,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {
+   "tikz": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 30,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 31,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {
+   "figure": 1
+  },
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 32,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 33,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 34,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 35,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 36,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_practice",
+  "round": 37,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 19,
+  "problems": 5,
+  "points": 100,
+  "pending": 0,
+  "proofread": 5,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 20,
+  "problems": 5,
+  "points": 100,
+  "pending": 0,
+  "proofread": 5,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 21,
+  "problems": 3,
+  "points": 100,
+  "pending": 0,
+  "proofread": 3,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 22,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 23,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 24,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 25,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 26,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 27,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 28,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 29,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 30,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 31,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 32,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 33,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 34,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 35,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 36,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "appraisal_theory",
+  "round": 37,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 19,
+  "problems": 3,
+  "points": 100,
+  "pending": 0,
+  "proofread": 3,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 20,
+  "problems": 3,
+  "points": 100,
+  "pending": 0,
+  "proofread": 3,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 21,
+  "problems": 3,
+  "points": 100,
+  "pending": 0,
+  "proofread": 3,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 22,
+  "problems": 3,
+  "points": 100,
+  "pending": 0,
+  "proofread": 3,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 23,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 24,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 25,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 26,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 27,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 28,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 29,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 30,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 31,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 32,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 33,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 34,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 35,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 36,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ },
+ {
+  "subject": "compensation_law",
+  "round": 37,
+  "problems": 4,
+  "points": 100,
+  "pending": 0,
+  "proofread": 4,
+  "flags": {},
+  "reviewflags": 0,
+  "instructions": true
+ }
+]

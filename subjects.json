@@ -1,0 +1,9 @@
+{
+  "exam": "감정평가사 제2차 시험",
+  "note": "폴더명(folder) ↔ 과목명 대응표. 2차 시험은 교시당 1과목이며 문항 파일 번호(NN)는 시험지의 【문제 N】 번호와 같다.",
+  "subjects": [
+    {"folder": "appraisal_practice", "name_ko": "감정평가실무",          "period": 1, "aliases": ["감정평가실무"],                  "rounds": "19-37"},
+    {"folder": "appraisal_theory",   "name_ko": "감정평가이론",          "period": 2, "aliases": ["감정평가이론"],                  "rounds": "19-37"},
+    {"folder": "compensation_law",   "name_ko": "감정평가 및 보상법규",  "period": 3, "aliases": ["감정평가 및 보상법규", "보상법규"], "rounds": "19-37"}
+  ]
+}

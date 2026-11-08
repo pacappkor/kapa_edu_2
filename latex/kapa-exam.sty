@@ -1,0 +1,126 @@
+% SPDX-License-Identifier: GPL-3.0-only
+% kapa-exam.sty — 감정평가사 기출문제 문항 조각(fragment) 공통 스타일
+% XeLaTeX 전용. 문항 파일(<subject>/<round>/NN.tex)은 프리앰블 없이 이 스타일의
+% 매크로만 사용한다. 문항 파일을 단독 컴파일하려면 latex/single.tex 을,
+% 회차·과목 묶음 PDF 는 tools/build.py 를 사용한다.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{kapa-exam}[2026/11/07 KAPA past-exam fragments]
+
+\RequirePackage{iftex}
+\RequireXeTeX
+\RequirePackage{kotex}
+\RequirePackage{fontspec}
+% TeX Live 기본 포함 글꼴(unfonts-core) — 한글·한자·원문자 모두 포함
+\setmainhangulfont{UnBatang}
+\setmainhanjafont{UnBatang}
+\setsanshangulfont{UnDotum}
+\setmainfont{Latin Modern Roman}
+\RequirePackage{newunicodechar}
+\newunicodechar{∙}{\ensuremath{\cdot}}
+% 가운뎃점으로 쓰인 ㆍ(U+318D)·․(U+2024): 본문 글꼴에서 쉼표(、)나 아래 점처럼 보이므로 가운데 점으로 출력
+\newunicodechar{ㆍ}{\textperiodcentered}\newunicodechar{․}{\textperiodcentered}
+% Greek letters / leaders in running text (Latin Modern has no text Greek)
+\newunicodechar{α}{\ensuremath{\alpha}}\newunicodechar{β}{\ensuremath{\beta}}
+\newunicodechar{γ}{\ensuremath{\gamma}}\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{ε}{\ensuremath{\varepsilon}}\newunicodechar{θ}{\ensuremath{\theta}}
+\newunicodechar{λ}{\ensuremath{\lambda}}\newunicodechar{μ}{\ensuremath{\mu}}
+\newunicodechar{π}{\ensuremath{\pi}}\newunicodechar{ρ}{\ensuremath{\rho}}
+\newunicodechar{σ}{\ensuremath{\sigma}}\newunicodechar{τ}{\ensuremath{\tau}}
+\newunicodechar{Δ}{\ensuremath{\Delta}}\newunicodechar{Σ}{\ensuremath{\Sigma}}
+\newunicodechar{Π}{\ensuremath{\Pi}}\newunicodechar{Ω}{\ensuremath{\Omega}}
+\newunicodechar{․}{.}
+\newunicodechar{≥}{\ensuremath{\geq}}\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≧}{\ensuremath{\geqq}}\newunicodechar{≦}{\ensuremath{\leqq}}
+\newunicodechar{≒}{\ensuremath{\fallingdotseq}}\newunicodechar{⋅}{\ensuremath{\cdot}}
+\newunicodechar{∼}{\ensuremath{\sim}}\newunicodechar{∑}{\ensuremath{\sum}}
+% UnBatang 에 없는 한자: TeX Live 의 Baekmuk Batang 으로 대체
+\newfontfamily\kapafallback{Baekmuk Batang}
+\newunicodechar{垈}{\ifmmode\text{\kapafallback\symbol{"5788}}\else{\kapafallback\symbol{"5788}}\fi}
+% 원화 기호: 수식 안에서도 본문 글꼴로
+\newunicodechar{￦}{\ifmmode\text{\symbol{"FFE6}}\else\symbol{"FFE6}\fi}
+% O/X 표시: HWP 원문의 결합 원(U+20DD 단독)·☓ 를 ○·× 모양으로 출력
+\newunicodechar{⃝}{○}\newunicodechar{☓}{\ensuremath{\times}}
+\newunicodechar{｢}{「}
+\newunicodechar{｣}{」}
+
+\RequirePackage{amsmath,amssymb}
+\RequirePackage{graphicx}
+\RequirePackage{import}
+\RequirePackage{array,tabularx,multirow,makecell,longtable,booktabs}
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\usetikzlibrary{arrows.meta,patterns,calc,positioning,decorations.pathreplacing,intersections}
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\RequirePackage{xcolor}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{ulem}
+\normalem
+
+% ---------- 정답 표시 토글 ----------
+\newif\ifkapashowanswers
+\kapashowanswerstrue
+\DeclareOption{noanswers}{\kapashowanswersfalse}
+\ProcessOptions\relax
+
+% ---------- 문항 ----------
+% \begin{question}{번호} ... \end{question}
+% 쪽 넘김 허용: minipage 로 감싸면 한 쪽보다 긴 문항(표가 많은 회계 문항 등)이 쪽 아래로 넘쳐
+% 뒤 내용을 가리므로, 문항 시작부에서만 쪽 나눔을 억제(\needspace)하고 본문은 자유롭게 넘어가게 한다.
+\RequirePackage{needspace}
+\newenvironment{question}[1]{%
+  \par\medskip\needspace{6\baselineskip}\noindent
+  \textbf{#1.}\ \ignorespaces
+}{%
+  \par\medskip
+}
+% 긴 문항(쪽 넘김 허용, 2차 시험 등)
+\newenvironment{longquestion}[1]{%
+  \par\medskip\noindent\textbf{#1}\par\nopagebreak
+}{\par\medskip}
+
+% 배점 표기 (2차 시험)  예: \points{40}
+\newcommand{\points}[1]{\hfill(#1점)}
+
+% ---------- 선택지 ①~⑤ ----------
+\newcommand{\kapacircledn}[1]{\ifcase#1\or ①\or ②\or ③\or ④\or ⑤\or ⑥\or ⑦\or ⑧\or ⑨\or ⑩\fi}
+\newcommand{\kapacircled}[1]{\expandafter\kapacircledn\csname c@#1\endcsname}
+\AddEnumerateCounter{\kapacircled}{\kapacircled}{⑩}
+\newlist{choices}{enumerate}{1}
+\setlist[choices]{label=\kapacircled*, leftmargin=2em, itemsep=0.2em, topsep=0.4em}
+
+% <보기> 상자
+\newtcolorbox{bogi}[1][보 기]{enhanced, breakable, colback=white, colframe=black,
+  boxrule=0.4pt, arc=0pt, left=4pt, right=4pt, top=4pt, bottom=4pt,
+  title={\centering〈#1〉}, coltitle=black, colbacktitle=white,
+  attach boxed title to top center={yshift=-2.2mm},
+  boxed title style={boxrule=0pt, colframe=white}}
+% 테두리만 있는 지문 상자
+% enhanced jigsaw: 쪽에서 나뉜 조각 사이에 위아래 테두리를 그리지 않음(줄 사이 가로선 결함 방지)
+\newtcolorbox{framedtext}{enhanced jigsaw, breakable, colback=white, colframe=black,
+  boxrule=0.4pt, arc=0pt, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+% ---------- 그림 ----------
+% \qfigure[너비]{figures/NN-k.png} — 경로는 문항 파일 기준 상대경로(\subimport 사용)
+\newcommand{\qfigure}[2][0.6\linewidth]{%
+  \par\smallskip{\centering\includegraphics[width=#1,keepaspectratio]{#2}\par}\smallskip}
+
+% ---------- 정답 (1차 시험) ----------
+% \answer{3}            단일 정답
+% \answer{2,4}          복수 정답(정답 인정 번호 모두 나열)
+% \answerall            전원 정답(모든 선택지 정답 처리)
+% \answerunknown        정답 미확인(추정 금지)
+% \answernote{...}      정답 정정 등 특이사항 원문 요지
+\newcommand{\kapaanswerbox}[1]{%
+  \ifkapashowanswers\par\smallskip\noindent
+  \fcolorbox{gray}{white}{\small 정답: #1}\par\fi}
+\newcommand{\answer}[1]{\kapaanswerbox{#1}}
+\newcommand{\answerall}{\kapaanswerbox{전원 정답}}
+\newcommand{\answerunknown}{\kapaanswerbox{미확인}}
+\newcommand{\answernote}[1]{\ifkapashowanswers\par\noindent{\small\textit{정답 비고: #1}}\par\fi}
+
+% ---------- 원문 표기 보조 ----------
+\newcommand{\blank}[1][3em]{\underline{\hspace{#1}}}
+\newcommand{\reviewflag}[1]{\ifkapashowanswers\par\noindent{\small\color{red}[검토 필요: #1]}\par\fi}
+
+\endinput
