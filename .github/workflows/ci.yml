@@ -23,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+      - name: Reject tracked symlinks
+        run: python -B tools/ci_integrity.py --symlinks-only
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -32,15 +34,17 @@ jobs:
           CI_EVENT: ${{ github.event_name }}
           CI_BASE: ${{ github.event.pull_request.base.sha }}
           CI_BEFORE: ${{ github.event.before }}
-        run: python tools/ci_changes.py
+        run: python -B tools/ci_changes.py
       # No exam-source downloads or TeX installation; validators use the checkout only.
       - name: Validate structure and Markdown prose
         if: steps.changes.outputs.validate == 'true'
-        run: python tools/validate.py --write-status
+        run: python -B tools/validate.py --write-status
       - name: Check generated status is current
         if: steps.changes.outputs.validate == 'true'
         run: |
-          STATUS=$(git status --porcelain --untracked-files=all -- docs/STATUS.md docs/status.json)
+          git cat-file -e HEAD:docs/STATUS.md
+          git cat-file -e HEAD:docs/status.json
+          STATUS=$(git status --porcelain --untracked-files=all --ignored -- docs/STATUS.md docs/status.json)
           if [ -n "$STATUS" ]; then
             echo "$STATUS"
             exit 1
@@ -49,26 +53,13 @@ jobs:
         if: steps.changes.outputs.tests == 'true'
         # Empty discovery is valid until test files arrive on main (also on Python 3.14+).
         run: >-
-          python -c "import unittest; suite = unittest.defaultTestLoader.discover('tools', pattern='test_*.py'); result = unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
+          python -B -c "import unittest; suite = unittest.defaultTestLoader.discover('tools', pattern='test_*.py'); result = unittest.TextTestRunner(verbosity=2).run(suite); raise SystemExit(not result.wasSuccessful())"
       - name: Check build script Python syntax (no TeX)
         if: steps.changes.outputs.build == 'true'
-        run: python -m py_compile tools/build.py
-      - name: Check PR whitespace against base
-        if: github.event_name == 'pull_request'
+        run: python -B -c "from pathlib import Path; compile(Path('tools/build.py').read_bytes(), 'tools/build.py', 'exec')"
+      - name: Check generated blobs and whole working tree
+        run: python -B tools/ci_integrity.py docs/STATUS.md docs/status.json
+      - name: Check diff whitespace
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_SHA: ${{ steps.changes.outputs.whitespace_base }}
         run: git diff --check "$BASE_SHA" HEAD
-      - name: Check whitespace for non-PR events
-        if: github.event_name != 'pull_request'
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BEFORE_SHA: ${{ github.event.before }}
-        run: |
-          BASE_SHA="$BEFORE_SHA"
-          if [ "$EVENT_NAME" != push ] || [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]] || ! git rev-parse --verify --quiet "$BASE_SHA^{commit}" >/dev/null; then
-            BASE_SHA=HEAD^
-          fi
-          if [ "$BASE_SHA" = 'HEAD^' ] && ! git rev-parse --verify --quiet "HEAD^{commit}^" >/dev/null; then
-            BASE_SHA=$(git hash-object -t tree /dev/null)
-          fi
-          git diff --check "$BASE_SHA" HEAD

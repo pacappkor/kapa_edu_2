@@ -54,6 +54,7 @@ class ChangeSelectionTests(unittest.TestCase):
             }):
                 ci_changes.main()
             flags = dict(line.split('=') for line in output.read_text().splitlines())
+            flags.pop('whitespace_base')
             self.assertEqual(flags, dict.fromkeys(ci_changes.GROUPS, 'true'))
             self.assertEqual(flags['tests'], 'true')
             self.assertEqual(flags['build'], 'true')
@@ -72,4 +73,5 @@ class ChangeSelectionTests(unittest.TestCase):
                     }):
                         ci_changes.main()
                     flags = dict(line.split('=') for line in output.read_text().splitlines())
+                    flags.pop('whitespace_base')
                     self.assertEqual(flags, dict.fromkeys(ci_changes.GROUPS, 'true'))

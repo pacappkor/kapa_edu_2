@@ -33,28 +33,24 @@ def classify(paths, all_checks=False):
 
 def main():
     event = os.environ.get('CI_EVENT', '')
-    base = os.environ.get('CI_BASE', '')
-    before = os.environ.get('CI_BEFORE', '')
-    all_checks = event != 'pull_request'
+    resolved = dict(line.split('=', 1) for line in subprocess.check_output(
+        ['bash', str(Path(__file__).with_name('ci_base.sh'))], cwd=ROOT,
+        text=True).splitlines())
+    start = resolved['base']
+    all_checks = resolved['all'] == 'true'
     paths = []
-    if event in ('pull_request', 'push'):
-        start = base if event == 'pull_request' else before
-        if start and set(start) != {'0'}:
-            separator = '...' if event == 'pull_request' else '..'
-            try:
-                subprocess.run(
-                    ['git', 'rev-parse', '--verify', '--quiet', f'{start}^{{commit}}'],
-                    cwd=ROOT, check=True, capture_output=True)
-                result = subprocess.run(
-                    ['git', 'diff', '--no-renames', '--name-only', '-z', f'{start}{separator}HEAD'],
-                    cwd=ROOT, check=True, capture_output=True)
-                paths = result.stdout.decode('utf-8').rstrip('\0').split('\0') if result.stdout else []
-            except (OSError, subprocess.CalledProcessError, UnicodeError):
-                all_checks = True
-        else:
+    if not all_checks:
+        separator = '...' if event == 'pull_request' else '..'
+        try:
+            result = subprocess.run(
+                ['git', 'diff', '--no-renames', '--name-only', '-z', f'{start}{separator}HEAD'],
+                cwd=ROOT, check=True, capture_output=True)
+            paths = result.stdout.decode('utf-8').rstrip('\0').split('\0') if result.stdout else []
+        except (OSError, subprocess.CalledProcessError, UnicodeError):
             all_checks = True
     flags = classify(paths, all_checks)
     with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+        output.write(f"whitespace_base={resolved['whitespace_base']}\n")
         for group, enabled in flags.items():
             output.write(f'{group}={str(enabled).lower()}\n')
     with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
