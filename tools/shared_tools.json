@@ -1,0 +1,10 @@
+{
+  "canonical_owner": "kapa_edu_1",
+  "note": "The sibling repo must carry identical bytes for these tools and an identical manifest. Coordinate reviewed changes in both repos; kapa_mcp render.py _BUILD_HASHES pins tools/build.py, so updates also require explicit review of that pin. Do not move or refactor these tools to consolidate them. tools/pipeline/mdtex.py differs intentionally and is not shared.",
+  "sha256": {
+    "tools/build.py": "b94e6d0abe4af134208c23927b1f945cebde244faa6dbe0f19e1e19812d659e1",
+    "tools/pipeline/qnet_fetch.py": "c18ecf6dcb81a6f4c2472744fbaa69f7e5350de713580fbdfc16eb1c9b92a27e",
+    "tools/pipeline/rhwp_pages.py": "0fa2a8e2a3c934bddf68ffcc23ee408c24a1ac6dd36c666fdf45e015182a1111",
+    "tools/pipeline/text_crosscheck.py": "36b50a44b0f91a4311b8819a48db87ddb275398d2271ccf75172a5a92ea81fa1"
+  }
+}

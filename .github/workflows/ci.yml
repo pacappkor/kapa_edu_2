@@ -37,6 +37,8 @@ jobs:
           CI_BASE: ${{ github.event.pull_request.base.sha }}
           CI_BEFORE: ${{ github.event.before }}
         run: python -I -B tools/ci_changes.py
+      - name: Check shared tool hashes
+        run: python -I -B tools/ci_shared_tools.py
       # No exam-source downloads or TeX installation; validators use the checkout only.
       - name: Validate structure and Markdown prose
         if: steps.changes.outputs.validate == 'true'
