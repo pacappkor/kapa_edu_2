@@ -12,11 +12,12 @@ description: 감정평가사(1차·2차) 기출문제와 최종 정답을 Q-Net 
 
 ## 입력
 - 대상: 시험(1차/2차), 회차, (선택) 과목·문항 범위
-- 저장소: 1차 `pacappkor/kapa_edu_1`, 2차 `pacappkor/kapa_edu_2` (비공개 유지)
+- 저장소: 1차 `pacappkor/kapa_edu_1`, 2차 `pacappkor/kapa_edu_2` (공개 여부는 각 저장소 관리자 결정; 자격증명은 절대 커밋하지 않음)
 
 ## 절차
 1. **사전 확인**
-   - `gh repo view <repo> --json visibility` 로 PRIVATE 확인, 기본 브랜치·열린 PR·이슈·라벨 확인.
+   - 승인된 작업 범위에서 저장소 공개 정책과 기본 브랜치·열린 PR·이슈·라벨을 확인한다. 비공개 상태를 전제로 하지 않으며, 공개 여부를 임의로 변경하지 않는다.
+   - `NOTICE.md` 의 회차별 이용 조건을 확인한다. 2차 제19–24회는 별도 재이용 허락 미확인 상태이며, Q-Net 공지의 2014년 이후 개방을 소급 적용하지 않는다.
    - `docs/STATUS.md`, 관련 이슈를 읽고 중복 작업을 피한다.
    - 저장소는 한글·공백 없는 경로에 둔다(KTUG 권장). `tools/build.py` 의 한글 LaTeX 사전 검사로 글꼴·kotex 를 확인하며, 필요할 때만 `--skip-preflight` 로 생략한다(README 환경 안내 참고).
 2. **수집** (`tools/pipeline/qnet_fetch.py <작업폴더>`)

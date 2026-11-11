@@ -1,5 +1,8 @@
 # kapa_edu_2 — 감정평가사 제2차 시험 기출문제 (LaTeX)
 
+[![visitors](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pacappkor/kapa_edu_2/traffic/.traffic/badge-views.json)](https://github.com/pacappkor/kapa_edu_2)
+[![clones](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pacappkor/kapa_edu_2/traffic/.traffic/badge-clones.json)](https://github.com/pacappkor/kapa_edu_2)
+
 Q-Net(한국산업인력공단)에 공개된 **감정평가사 제2차 시험** 기출문제를 과목별·회차별·문제별 LaTeX 조각 파일로
 정리한 저장소입니다. 2차 시험은 논술형이므로 공식 정답이 공개되지 않으며, 이 저장소에도 정답·해설은 없습니다.
 
@@ -13,7 +16,9 @@ Q-Net(한국산업인력공단)에 공개된 **감정평가사 제2차 시험** 
 ## 자료 출처와 이용 조건
 - 기출문제: Q-Net 감정평가사 › 기출문제 내려받기 <https://www.q-net.or.kr/cst003.do?id=cst00309&gSite=L&gId=60>
 - 게시글 번호(artlSeq)·첨부파일명·SHA-256: `docs/SOURCES.md`, 각 파일의 `%% source:` 줄.
-- **이용 조건**: 문항·정답 내용은 전 회차 **공공누리 제1유형(출처표시)**, 이 저장소의 변환·조판 코드·도구·문서는 **[GPL-3.0](LICENSE)** — 출처: 한국산업인력공단, Q-Net. 자세한 내용과 적용 근거는 [`NOTICE.md`](NOTICE.md). Q-Net 공지는 2014년 자료부터 제1유형 개방을 밝히고 있으며, 2013년 이전(제19–24회) 자료에도 저장소 관리자 결정으로 같은 조건을 일괄 적용합니다. 저장소 공개 여부는 별도로 관리자가 결정합니다(현재 비공개).
+- **이용 조건**: 시험 문항 내용(그림 PNG 포함)의 출처는 한국산업인력공단, Q-Net 입니다. 제25–37회(2014–2026)는 Q-Net 공지(artlSeq=5259147)의 **공공누리 제1유형(출처표시)** 개방 범위입니다. 제19–24회(2008–2013)는 같은 공지의 범위 밖이며 별도 재이용 허락을 확인하지 못했습니다. 관리자가 원자료에 이용 허락을 부여하지 않으며, 재이용 전 권리자 확인이 필요합니다. 저장소 고유의 변환·조판 코드·도구·문서만 **[GPL-3.0-only](LICENSE)** 입니다. 자세한 범위와 그림의 권리는 [`NOTICE.md`](NOTICE.md) 를 확인하세요.
+- **공개 정책**: 저장소는 관리자 결정에 따라 공개할 수 있습니다. 공개 여부와 관계없이 자격증명·토큰·비밀번호는 절대 커밋하지 않습니다. 보안 제보는 [`SECURITY.md`](SECURITY.md) 를 따릅니다.
+- **비공식 자료·무보증**: 이 저장소는 Q-Net 공식 서비스가 아닙니다. 현재 정답·해설은 없으며, 이 저장소와 관련해 제공되는 답안·해설이 있다면 비공식 자료입니다. 변환된 문항과 답안·해설의 정확성·완전성을 보증하지 않으며, 공식 시험지와 공지를 확인해야 합니다.
 - 원본 시험지(PDF/HWP)는 저장소에 넣지 않습니다.
 
 ## 디렉터리 구조와 과목 대응
