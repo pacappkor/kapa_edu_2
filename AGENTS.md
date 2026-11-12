@@ -54,6 +54,7 @@ HWP 는 두 도구를 함께 씁니다: **kordoc**(본문·수식 추출, 수식
 7. HWP 회차는 rhwp 렌더링이 일부 글자(여는 따옴표 ‘ “ 등)를 빠뜨리거나 줄을 겹쳐 그리는 일이 있습니다. **렌더링에만 없는 글자는 원문 근거가 아닙니다** — 글자는 HWP 텍스트(rhwp `export-text`)로, 구조(상자·표·배치)는 이미지로 확인합니다.
 
 ## 4. 기여(PR) 절차
+- 기본 검토 소유자는 `.github/CODEOWNERS` 에 지정한다.
 - 문서(Markdown)에서 범위는 "–"(en dash)로 씁니다(예: 제19–37회). `~` 는 GitHub 에서 취소선이 되므로 코드 스팬 밖에서 쓰지 않습니다(`validate.py` 가 검사).
 1. `git switch -c <type>/<요약>` (예: `fix/practice-26-tables`, `data/round-38`)
 2. 커밋 메시지: `<과목>/<회차>: <무엇을>` (예: `appraisal_practice/26: 문제 1 자료 3 표 재구성`)
