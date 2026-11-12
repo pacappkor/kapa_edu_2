@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-3.0-only
+site_name: 감정평가사 2차 기출문제
+site_url: https://pacappkor.github.io/kapa_edu_2/
+repo_url: https://github.com/pacappkor/kapa_edu_2
+edit_uri: ''
+docs_dir: build/site-src
+site_dir: build/site
+theme:
+  name: material
+  language: ko
+  custom_dir: site-overrides
+plugins:
+  - search:
+      lang: [ko, en]
+markdown_extensions:
+  - tables
+  - fenced_code
+  - toc:
+      permalink: true
