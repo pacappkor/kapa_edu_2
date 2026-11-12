@@ -1,9 +1,0 @@
-Pages phase 1 workflow
-1. Read source notices, metadata and build contracts; isolate work on pages.
-2. Implement the first-exam generator, reusing build.py compilation and wrapper setup.
-3. Gate: full local typesetting, generator tests, strict MkDocs build and exact offline CI checks.
-4. Port the same generator/configuration to second exam; repeat gates with no answer invention.
-5. Commit each worktree locally only. No push; review before merging either branch.
-6. Deployment after review: repository Pages source must be GitHub Actions; main-only deploy job.
-Failure policy: missing tooling/invalid metadata stops build; content compile errors suppress affected PDFs and appear visibly with single-fragment diagnostics. Never change question content.
-Offline integrity gate runs with generated build artifacts temporarily held outside the checkout; restore after verification. Status output is normalized to repository LF bytes on Windows.
