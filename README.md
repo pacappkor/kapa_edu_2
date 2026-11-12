@@ -182,3 +182,24 @@ N은 1 이상이어야 하며, 0이면 OK 줄에
 - 변경 내용: [CHANGELOG.md](CHANGELOG.md)
 - 버전 규칙과 새 회차 추가 절차: [docs/RELEASING.md](docs/RELEASING.md)
   - 새 시험 회차를 추가하면 MINOR 를 올린다.
+
+## GitHub Pages 빌드
+
+TeX Live와 Python을 준비한 뒤 저장소 루트에서 실행합니다.
+
+```sh
+python -m pip install --require-hashes -r requirements-docs.txt
+python -I -B tools/site.py
+python -m mkdocs build --strict
+```
+
+- 출력: `build/site-src/`(Markdown·PDF), `build/site/`(배포 사이트), `build/site-report.json`(시간·용량·조판 오류). 모두 gitignore 대상입니다.
+- 회차 전체와 교시별 PDF를 모두 만듭니다. 과목 지시문(`00.tex`)이 있으면 유지하고 정답은 PDF에서 숨깁니다.
+- 문항 조판 실패 시 해당 묶음 PDF를 게시하지 않고 페이지에 오류 및 개별 문항 진단을 표시합니다. 글꼴 누락도 표시합니다. 도구·패키지 또는 메타데이터 오류는 빌드를 중단합니다.
+- `offline-checks`는 유지하며 별도 `docs-build`가 PR에서 전체 PDF 생성 및 `mkdocs build --strict`를 수행합니다.
+- Pages는 main만 배포합니다. 저장소 Settings → Pages → Source를 GitHub Actions로 설정해야 합니다. 아직 배포하지 않았습니다.
+- CI는 Ubuntu 24.04 apt의 XeLaTeX·한국어·LaTeX extra·pictures·recommended fonts와 Un/Baekmuk 글꼴 부분 설치를 사용합니다. 전체 TeX Live보다 설치량을 줄이고 기존 스타일의 의존성을 충족합니다. `build.py` 사전 검사가 실제 파일을 확인합니다.
+- apt 보안 업데이트를 받으므로 TeX 바이트 재현성은 보장하지 않습니다. 액션은 전체 SHA, Python 문서 의존성은 버전 및 해시로 고정했습니다. Ubuntu CI는 로컬 TeX Live 2026과 버전이 다를 수 있습니다.
+- 예상 CI 소요: 첫 설치 포함 8–20분(러너·패키지 미러에 따라 변동), 제한 45분. 실제 hosted runner 시간은 첫 PR에서 확인합니다.
+
+2차에는 공식 모범답안이 없어 정답표를 생성하지 않습니다.
